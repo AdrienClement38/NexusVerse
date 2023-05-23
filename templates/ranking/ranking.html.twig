@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ranking{% endblock %}
+
+{% block pageTitle %}Ranking{% endblock %}
+    
+{% block bodyContent %}
+    <h1>Classement des équipes</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Équipe</th>
+                <th>Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for team in teams %}
+            <tr>
+                {# <td>{{ equipe.nom }}</td>
+                <td>{{ equipe.points }}</td> #}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
