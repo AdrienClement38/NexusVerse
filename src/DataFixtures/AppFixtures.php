@@ -191,7 +191,6 @@ class AppFixtures extends Fixture
                 $player->setPseudo($playerData['alias'])
                     ->setFirstName($playerData['firstName'])
                     ->setLastName($playerData['lastName'])
-                    ->setName($faker->userName)
                     ->setTeam($team);
 
                 // Randomly add a champion to each player
@@ -236,8 +235,7 @@ class AppFixtures extends Fixture
             $manager->persist($team);
 
             $player = new Player();
-            $player->setName($faker->name)
-                ->setFirstName($faker->firstName)
+            $player->setFirstName($faker->firstName)
                 ->setLastName($faker->lastName)
                 ->setPseudo($faker->userName)
                 ->setTeam($team);
