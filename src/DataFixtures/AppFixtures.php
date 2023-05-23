@@ -227,9 +227,13 @@ class AppFixtures extends Fixture
 
         foreach ($teamsData as $teamData) {
             $team = new Team();
+            $imgTeam = new Img();
+            $imgTeam->setUrl($teamData['img']);
+            $manager->persist($imgTeam);
+
             $team->setName($teamData['name'])
                 ->setCountry($teamData['country'])
-                ->addImage($teamData['img']);
+                ->addImage($imgTeam);
             $manager->persist($team);
 
             foreach ($teamData['players'] as $playerData) {
