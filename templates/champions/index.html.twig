@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+    {% block title %}Champions{% endblock %}
+
+    {% block pageTitle %}Champions{% endblock %}
+    
+    {% block bodyContent %}
+
+    <container class="d-flex justify-content-around px-5 mb-3">
+
+        <div class="row">
+
+            {% for champion in champions %}
+
+                <div class="col"> 
+
+                    <div class="card" style="width: 18rem; margin: 0.9rem 0.5rem;">
+
+                        <img src="{{champion.images[0].url}}" class="card-img-top" alt="champion">
+
+                        <div class="card-body">
+
+                            <h5 class="card-title">{{champion.name}}</h5>
+                            <p class="card-text mb-4">{{champion.description}}</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </container>
+
+{% endblock %}
+
