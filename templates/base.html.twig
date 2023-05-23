@@ -14,10 +14,11 @@
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %} #}
         <link rel="stylesheet" href="{{ asset('/bootswatch/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('styles/custom.css') }}">
 
         <style>
             .body {
-                background-repeat: no-repeat;
+            background-repeat: no-repeat;
             }
 
             .card {
@@ -26,9 +27,29 @@
                 border: 1px solid;
             }
 
+            .image-container {
+                width: 100%;
+                height: 0;
+                padding-bottom: calc(100% * (2 / 3));
+                overflow: hidden;
+            }
+
+            .image-container img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain; /* Pour ajuster l'image sans déformation */
+            }
+
             .card:hover {
                 transform: scale(1.05);
                 box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            }
+
+            .col {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 2rem;
             }
         </style>
 	</head>
@@ -47,15 +68,21 @@
                     <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Leagues</a>
+                            <a class="nav-link" href="/home">Leagues</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Classement</a>
+                            <a class="nav-link" href="/league">Teams</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/champions">Champions</a>
+                        </li>
+                        {# <li class="nav-item">
+                            <a class="nav-link" href="app_ranking">Ranking</a>
+                        </li> #}
                         <li class="nav-item">
                             <a class="nav-link" href="#">Info tournois</a>
                         </li>
-                        <li class="nav-item dropdown">
+                        {# <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="#">Action</a>
@@ -64,8 +91,18 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Separated link</a>
                             </div>
-                        </li>
+                        </li> #}
                     </ul>
+                    {% if app.user %}
+
+                        <a class="btn btn-secondary my-2 my-sm-0" href="app_logout">Logout</a>
+                    
+                    {% else %}
+
+                        <a class="btn btn-secondary my-2 my-sm-0 me-1" href="app_login">Login</a>
+                        <a class="btn btn-secondary my-2 my-sm-0 me-3" href="app_register">Register</a>
+
+                    {% endif %}
                     <form class="d-flex">
                         <input class="form-control me-sm-2" type="search" placeholder="Search">
                         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>

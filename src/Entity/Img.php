@@ -24,6 +24,7 @@ class Img
     #[ORM\ManyToMany(targetEntity: Champion::class, mappedBy: 'images')]
     private Collection $champions;
 
+
     #[ORM\ManyToMany(targetEntity: League::class, mappedBy: 'images')]
     private Collection $leagues;
 
@@ -34,6 +35,7 @@ class Img
     {
         $this->players = new ArrayCollection();
         $this->champions = new ArrayCollection();
+
         $this->leagues = new ArrayCollection();
         $this->teams = new ArrayCollection();
     }
@@ -162,4 +164,5 @@ class Img
 
         return $this;
     }
+
 }
