@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{# {% block navbar %}
+{% endblock %} #}
+
+    {% block title %}Team{% endblock %}
+
+    {% block pageTitle %}Players{% endblock %}
+    
+    {% block bodyContent %}
+
+    <container class="d-flex justify-content-around px-5 mb-3">
+    
+        <div class="row">
+        
+            {# {% for player in players %} #}
+
+                <div class="col">
+                
+                    <a class="text-decoration-none" href="">
+                        
+                        <div class="card" style="width: 18rem;">
+                            {# <img src="..." class="card-img-top" alt="..."> #}
+                            <p>Image</p>
+                            <div class="card-body">
+                                <h5 class="card-title">Nom Joueur</h5>
+                                <p class="card-text mb-4">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                {# <a href="#" class="btn btn-primary">Go somewhere</a> #}
+                            </div>
+                        </div>
+
+                    </a>
+
+                </div>
+
+            {# {% endfor %} #}
+        
+        </div>
+    
+    </container>
+
+{% endblock %}
+
