@@ -1,49 +1,53 @@
 {% extends 'base.html.twig' %}
 
-    {% block title %}Team{% endblock %}
-
-    {% block pageTitle %}Players{% endblock %}
-    
-    {% block bodyContent %}
-
-    {# <img src="{{ team.image[0].url }}" alt="team" style="width: 100%; height: 300px;"> #}
-
-    <container class="d-flex justify-content-around px-5 mb-3">
-
-        <div class="row">
-
-            {% for player in players %}
-
-                <div class="col">
-
-                    <div class="card" style="width: 18rem; margin: 0.9rem 0.5rem;">
-
-                        <img src="{{player.image[0].url}}" class="card-img-top" alt="player">
-
-                        <div class="card-body">
-
-                            <h5 class="card-title">{{player.pseudo}}</h5>
-                            <p>{{player.post}}</p>
-                            <p>{{player.team.name}}</p>
-
-                            {% for champion in player.champions %}
-                                <div>
-                                    <p>{{champion.name}}</p>
-                                    <img src="{{champion.images[1].url}}" alt="champion">
-                                </div>
-                            {% endfor %}
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            {% endfor %}
-
-        </div>
-
-    </container>
-
+{% block title %}Team
 {% endblock %}
 
+{% block pageTitle %}Players
+{% endblock %}
+
+{% block bodyContent %}
+
+	{# <img src="{{ team.image[0].url }}" alt="team" style="width: 100%; height: 300px;"> #}
+
+	<container class="d-flex justify-content-around px-5 mb-3">
+
+		<div class="row">
+
+			{% for team in teams %}
+
+				<div class="col">
+
+					<div class="card" style="width: 18rem; margin: 0.9rem 0.5rem;">
+
+						<img src="{{player.images[0].url}}" class="card-img-top" alt="player">
+
+						<div class="card-body">
+
+							<h5 class="card-title">{{player.pseudo}}</h5>
+							{% if player.post %}
+								<p>{{player.post.value}}</p>
+							{% endif %}
+
+							<p>{{player.team.name}}</p>
+
+							{% for champion in player.champions %}
+								<div>
+									<p>{{champion.name}}</p>
+									<img src="{{champion.images[1].url}}" alt="champion">
+								</div>
+							{% endfor %}
+
+						</div>
+
+					</div>
+
+				</div>
+
+			{% endfor %}
+
+		</div>
+
+	</container>
+
+{% endblock %}
