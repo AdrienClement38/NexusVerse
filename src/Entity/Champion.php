@@ -25,9 +25,13 @@ class Champion
     #[ORM\ManyToMany(targetEntity: Player::class, mappedBy: 'champions')]
     private Collection $players;
 
+    #[ORM\ManyToMany(targetEntity: Img::class, inversedBy: 'champions')]
+    private Collection $images;
+
     public function __construct()
     {
         $this->players = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -82,6 +86,30 @@ class Champion
         if ($this->players->removeElement($player)) {
             $player->removeChampion($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Img>
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Img $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images->add($image);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Img $image): self
+    {
+        $this->images->removeElement($image);
 
         return $this;
     }

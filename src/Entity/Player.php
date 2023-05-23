@@ -39,10 +39,14 @@ class Player
     #[ORM\ManyToMany(targetEntity: Favorite::class, mappedBy: 'players')]
     private Collection $userFavorites;
 
+    #[ORM\ManyToMany(targetEntity: Img::class, inversedBy: 'players')]
+    private Collection $images;
+
     public function __construct()
     {
         $this->champions = new ArrayCollection();
         $this->userFavorites = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -169,6 +173,30 @@ class Player
         if ($this->userFavorites->removeElement($userFavorite)) {
             $userFavorite->removePlayer($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Img>
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Img $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images->add($image);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Img $image): self
+    {
+        $this->images->removeElement($image);
 
         return $this;
     }
