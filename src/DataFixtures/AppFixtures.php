@@ -8,6 +8,7 @@ use App\Entity\Favorite;
 use App\Entity\Img;
 use App\Entity\League;
 use App\Entity\Player;
+use App\Entity\Post;
 use App\Entity\Score;
 use App\Entity\Team;
 use App\Entity\Tournament;
@@ -51,6 +52,34 @@ class AppFixtures extends Fixture
 
             $champions[] = $champion;
         }
+
+        $postsData = [
+
+            ['Top Lane'],
+            ['Jungle'],
+            ['Mid Lane'],
+            ['Bot Lane'],
+            ['Support'],
+        ];
+
+        $leagueData = [
+            [
+                'name' => 'MASTERCARD NEXUS TOUR    ',
+                'img' => 'https://static.riot-esports.fr/uploads/_AUTOxAUTO_crop_center-center_75_none/MNT.png',
+            ],
+            [
+                'name' => 'DIVISION 2',
+                'img' => 'https://static.riot-esports.fr/uploads/_AUTOxAUTO_crop_center-center_75_none/DIVISION2-LOGO-MAIN-BLACK-RGB.svg',
+            ],
+            [
+                'name' => 'LA LIGUE FRANÇAISE',
+                'img' => 'https://static.riot-esports.fr/uploads/_AUTOxAUTO_crop_center-center_75_none/LFL_Logo_RGF.png',
+            ],
+            [
+                'name' => 'COMPÉTITIONS INTERNATIONALES',
+                'img' => 'https://static.riot-esports.fr/uploads/_AUTOxAUTO_crop_center-center_75_none/LoLesports-Logo-competitions-inter_RGF.png',
+            ]
+        ];
 
         $teamsData = [
             [
@@ -180,6 +209,14 @@ class AppFixtures extends Fixture
             ],
         ];
 
+        $posts = [];
+        foreach ($postsData as $postData) {
+            $post = new Post();
+            $post->setValue($postData[0]);
+            $manager->persist($post);
+            $posts[] = $post;
+        }
+
         foreach ($teamsData as $teamData) {
             $team = new Team();
             $team->setName($teamData['name'])
@@ -204,63 +241,76 @@ class AppFixtures extends Fixture
                 $imgPlayer->setUrl($faker->imageUrl());
                 $player->addImage($imgPlayer);
                 $manager->persist($imgPlayer);
+
+                // Add random posts to player
+                for ($j = 0; $j < 3; $j++) {
+                    $randomPostIndex = array_rand($posts);
+                    $randomPost = $posts[$randomPostIndex];
+                    $player->setPost($randomPost);
+                }
             }
         }
 
-        for ($i = 0; $i < 10; $i++) {
-            $user = new User();
-            $user->setEmail($faker->email)
-                ->setRoles(['ROLE_USER'])
-                ->setPassword($faker->password)
-                ->setFirstName($faker->firstName)
-                ->setLastName($faker->lastName);
-            $manager->persist($user);
+        $user = new User();
+        $user->setEmail($faker->email)
+            ->setRoles(['ROLE_USER'])
+            ->setPassword($faker->password)
+            ->setFirstName($faker->firstName)
+            ->setLastName($faker->lastName);
+        $manager->persist($user);
 
+        foreach ($leagueData as $leagueItem) {
             $league = new League();
-            $league->setName($faker->word)
+            $league->setName($leagueItem['name'])
                 ->setStartDate($faker->dateTime)
                 ->setEndDate($faker->dateTime);
+
+            $imgLeague = new Img();
+            $imgLeague->setUrl($leagueItem['img']);
+            $league->addImage($imgLeague);
+
             $manager->persist($league);
-
-            $tournament = new Tournament();
-            $tournament->setName($faker->word)
-                ->setStartDate($faker->dateTime)
-                ->setEndDate($faker->dateTime)
-                ->setLeague($league);
-            $manager->persist($tournament);
-
-            $team = new Team();
-            $team->setName($faker->company)
-                ->setCountry($faker->country);
-            $manager->persist($team);
-
-            $player = new Player();
-            $player->setFirstName($faker->firstName)
-                ->setLastName($faker->lastName)
-                ->setPseudo($faker->userName)
-                ->setTeam($team);
-            $manager->persist($player);
-
-            $imgPlayer = new Img();
-            $imgPlayer->setUrl($faker->imageUrl());
-            $player->addImage($imgPlayer);
-            $manager->persist($imgPlayer);
-
-            $encounter = new Encounter();
-            $encounter->setDate($faker->dateTime)
-                ->setTournament($tournament);
-            $manager->persist($encounter);
-
-            $score = new Score();
-            $score->setValue($faker->numberBetween(0, 100))
-                ->setEncounter($encounter)
-                ->setTeam($team);
-            $manager->persist($score);
-
-            $favorite = new Favorite();
-            $favorite->setUser($user);
-            $manager->persist($favorite);
+            $manager->persist($imgLeague);
         }
+
+        $tournament = new Tournament();
+        $tournament->setName($faker->word)
+            ->setStartDate($faker->dateTime)
+            ->setEndDate($faker->dateTime)
+            ->setLeague($league);
+        $manager->persist($tournament);
+
+        $team = new Team();
+        $team->setName($faker->company)
+            ->setCountry($faker->country);
+        $manager->persist($team);
+
+        $player = new Player();
+        $player->setFirstName($faker->firstName)
+            ->setLastName($faker->lastName)
+            ->setPseudo($faker->userName)
+            ->setTeam($team);
+        $manager->persist($player);
+
+        $imgPlayer = new Img();
+        $imgPlayer->setUrl($faker->imageUrl());
+        $player->addImage($imgPlayer);
+        $manager->persist($imgPlayer);
+
+        $encounter = new Encounter();
+        $encounter->setDate($faker->dateTime)
+            ->setTournament($tournament);
+        $manager->persist($encounter);
+
+        $score = new Score();
+        $score->setValue($faker->numberBetween(0, 100))
+            ->setEncounter($encounter)
+            ->setTeam($team);
+        $manager->persist($score);
+
+        $favorite = new Favorite();
+        $favorite->setUser($user);
+        $manager->persist($favorite);
 
         $manager->flush();
     }
