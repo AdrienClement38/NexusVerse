@@ -1,8 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{# {% block navbar %}
-{% endblock %} #}
-
     {% block title %}League{% endblock %}
 
     {% block pageTitle %}Teams{% endblock %}
@@ -13,27 +10,34 @@
     
         <div class="row">
         
-            {# {% for player in players %} #}
+            {% for team in teams %}
 
                 <div class="col">
                 
-                    <a class="text-decoration-none" href="">
-                        
-                        <div class="card" style="width: 18rem;">
-                            {# <img src="..." class="card-img-top" alt="..."> #}
-                            <p>Image</p>
-                            <div class="card-body">
-                                <h5 class="card-title">Nom Team</h5>
-                                <p class="card-text mb-4">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                {# <a href="#" class="btn btn-primary">Go somewhere</a> #}
+                    <a class="text-decoration-none" href="{{ path('app_team', {'teamId': team.id}) }}">
+
+                        <div class="card" style="width: 18rem; height:25rem;">
+
+                            <div class="image-container" style="height: 18rem; padding:1rem;">
+                                <img src="{{team.images[0].url}}" alt="league">
                             </div>
+
+                            <div class="card-body">
+
+                                <div style="height: ">
+                                    <h5 class="card-title">{{ team.name }}</h5>
+                                </div>
+                                <button class="btn btn-primary">See Team</button>
+
+                            </div>
+
                         </div>
 
                     </a>
 
                 </div>
 
-            {# {% endfor %} #}
+            {% endfor %}
         
         </div>
     

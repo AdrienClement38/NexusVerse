@@ -1,0 +1,14 @@
+.body {
+    background-repeat: no-repeat;
+}
+
+.card {
+    transition: transform 0.3s;
+    border-radius: 5px;
+    border: 1px solid;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
