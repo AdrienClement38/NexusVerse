@@ -16,14 +16,17 @@
                 
                     <a class="text-decoration-none" href="{{ path('app_league', {'leagueId': league.id}) }}">
                         
-                        <div class="card" style="width: 18rem;">
+                        <div class="card" style="width: 18rem; height:25rem;">
 
-                            TODO corriger lien image
-                            <img src="{{league.images[0].url}}" class="card-img-top" alt="league">
+                            <div class="image-container" style="height: 18rem; padding:1rem;">
+                                <img src="{{league.images[0].url}}" alt="league">
+                            </div>
 
                             <div class="card-body">
 
-                                <h5 class="card-title">{{ league.name }}</h5>
+                                <div style="height: ">
+                                    <h5 class="card-title">{{ league.name }}</h5>
+                                </div>
                                 <button class="btn btn-primary">See League</button>
 
                             </div>

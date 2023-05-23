@@ -6,6 +6,8 @@
     
     {% block bodyContent %}
 
+    {# <img src="{{ team.image[0].url }}" alt="team" style="width: 100%; height: 300px;"> #}
+
     <container class="d-flex justify-content-around px-5 mb-3">
 
         <div class="row">
@@ -16,7 +18,7 @@
 
                     <div class="card" style="width: 18rem; margin: 0.9rem 0.5rem;">
 
-                        <img src="{{player.images[0].url}}" class="card-img-top" alt="player">
+                        <img src="{{player.image[0].url}}" class="card-img-top" alt="player">
 
                         <div class="card-body">
 
