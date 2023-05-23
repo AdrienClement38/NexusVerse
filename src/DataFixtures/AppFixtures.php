@@ -85,6 +85,7 @@ class AppFixtures extends Fixture
             [
                 'name' => '100 Thieves',
                 'country' => 'États-Unis',
+                'img' => 'https://images.prismic.io/liguefrlol/f9a9c225-9d2c-435b-93cb-77b7f4f86152_MS_white.png?auto=compress,format',
                 'players' => [
                     ['alias' => 'Tenacity', 'firstName' => 'Milan', 'lastName' => 'Oleksij'],
                     ['alias' => 'Closer', 'firstName' => 'Can', 'lastName' => 'Çelik'],
@@ -99,6 +100,7 @@ class AppFixtures extends Fixture
             [
                 'name' => 'Cloud9',
                 'country' => 'États-Unis',
+                'img' => 'https://images.prismic.io/liguefrlol/0edbd038-b3f0-41e7-93c1-d87f5932e65d_Copy+of+logo-blanc.png?auto=compress,format',
                 'players' => [
                     ['alias' => 'Fudge', 'firstName' => 'Ibrahim', 'lastName' => 'Allami'],
                     ['alias' => 'Blaber', 'firstName' => 'Robert', 'lastName' => 'Huang'],
@@ -112,6 +114,7 @@ class AppFixtures extends Fixture
             [
                 'name' => 'Counter Logic Gaming',
                 'country' => 'États-Unis',
+                'img' => 'https://images.prismic.io/lolliguefrd2/75f7a5d4-d679-432b-a455-37edeaab46de_AkromaBlanc.png?auto=compress,format',
                 'players' => [
                     ['alias' => 'Dhokla', 'firstName' => 'Niship', 'lastName' => 'Doshi'],
                     ['alias' => 'Contractz', 'firstName' => 'Juan', 'lastName' => 'Garcia'],
@@ -125,6 +128,7 @@ class AppFixtures extends Fixture
             [
                 'name' => 'Dignitas',
                 'country' => 'États-Unis',
+                'img' => 'https://images.prismic.io/liguefrlol/cdbf8cac-e27f-40ee-8ba0-94fc617e7bb2_TDS.png?auto=compress,format',
                 'players' => [
                     ['alias' => 'Armut', 'firstName' => 'İrfan Berk', 'lastName' => 'Tükek'],
                     ['alias' => 'Santorin', 'firstName' => 'Lucas', 'lastName' => 'Larsen'],
@@ -139,6 +143,7 @@ class AppFixtures extends Fixture
             [
                 'name' => 'Evil Geniuses',
                 'country' => 'États-Unis',
+                'img' => 'https://images.prismic.io/liguefrlol/fb1d4db1-5f29-4d78-bb96-f07da909d40a_Logo512blanc_transparent.png?auto=compress,format',
                 'players' => [
                     ['alias' => 'Ssumday', 'firstName' => 'Kim', 'lastName' => 'Chan-ho'],
                     ['alias' => 'Inspired', 'firstName' => 'Kacper', 'lastName' => 'Słoma'],
@@ -153,6 +158,7 @@ class AppFixtures extends Fixture
             [
                 'name' => 'FlyQuest',
                 'country' => 'États-Unis',
+                'img' => 'https://images.prismic.io/liguefrlol/7a910645-b964-4085-b8d0-e704e028b14e_klanik_color.png?auto=compress,format',
                 'players' => [
                     ['alias' => 'Impact', 'firstName' => 'Jeong', 'lastName' => 'Eon-young'],
                     ['alias' => 'Spica', 'firstName' => 'Mingyi', 'lastName' => 'Lu'],
@@ -167,6 +173,7 @@ class AppFixtures extends Fixture
             [
                 'name' => 'Golden Guardians',
                 'country' => 'États-Unis',
+                'img' => 'https://images.prismic.io/liguefrlol/6c56c155-a9a8-4477-8321-1164bdd02f58_PCS+-+Logo+v2.png?auto=compress,format',
                 'players' => [
                     ['alias' => 'Licorice', 'firstName' => 'Eric', 'lastName' => 'Ritchie'],
                     ['alias' => 'River', 'firstName' => 'Kim', 'lastName' => 'Dong-woo'],
@@ -181,6 +188,7 @@ class AppFixtures extends Fixture
             [
                 'name' => 'Immortals',
                 'country' => 'États-Unis',
+                'img' => 'https://division2lol.fr/tournois/6362211219340877824/equipes/6362215579435474944',
                 'players' => [
                     ['alias' => 'Revenge', 'firstName' => 'Mohamed', 'lastName' => 'Kaddoura'],
                     ['alias' => 'Kenvi', 'firstName' => 'Shane', 'lastName' => 'Espinoza'],
@@ -219,8 +227,13 @@ class AppFixtures extends Fixture
 
         foreach ($teamsData as $teamData) {
             $team = new Team();
+            $imgTeam = new Img();
+            $imgTeam->setUrl($teamData['img']);
+            $manager->persist($imgTeam);
+
             $team->setName($teamData['name'])
-                ->setCountry($teamData['country']);
+                ->setCountry($teamData['country'])
+                ->addImage($imgTeam);
             $manager->persist($team);
 
             foreach ($teamData['players'] as $playerData) {
