@@ -35,7 +35,6 @@ class Img
     {
         $this->players = new ArrayCollection();
         $this->champions = new ArrayCollection();
-
         $this->leagues = new ArrayCollection();
         $this->teams = new ArrayCollection();
     }

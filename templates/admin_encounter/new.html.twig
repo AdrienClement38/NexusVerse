@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Encounter{% endblock %}
+{% block pageTitle %}New Encounter{% endblock %}
+
+{% block bodyContent %}
+    <h1>Create new Encounter</h1>
+
+    {{ include('admin_encounter/_form.html.twig') }}
+
+    <a href="{{ path('app_admin_encounter_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Tournament{% endblock %}
+{% block pageTitle %}New Tournament{% endblock %}
+
+{% block bodyContent %}
+    <h1>Create new Tournament</h1>
+
+    {{ include('admin_tournament/_form.html.twig') }}
+
+    <a href="{{ path('app_admin_tournament_index') }}">back to list</a>
+{% endblock %}
