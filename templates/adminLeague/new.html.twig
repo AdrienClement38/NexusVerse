@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New League{% endblock %}
+{% block pageTitle %}New League{% endblock %}
+
+{% block bodyContent %}
+    <h1>Create new League</h1>
+
+    {{ include('adminLeague/_form.html.twig') }}
+
+    <a href="{{ path('app_league_index') }}">back to list</a>
+{% endblock %}
