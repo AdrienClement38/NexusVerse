@@ -280,9 +280,12 @@ class AppFixtures extends Fixture
 
         foreach ($leagueData as $leagueItem) {
             $league = new League();
+            $leagueImg = new Img();
+            $leagueImg->setUrl($leagueItem['img']);
             $league->setStartDate($faker->dateTime)
                 ->setEndDate($faker->dateTime)
-                ->setName($leagueItem['name']);
+                ->setName($leagueItem['name'])
+                ->addImage($leagueImg);
             $manager->persist($league);
 
             $tournament = new Tournament();
