@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Team{% endblock %}
+{% block pageTitle %}Edit Team{% endblock %}
+
+{% block bodyContent %}
+    <h1>Edit Team</h1>
+
+    {{ include('admin_team/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_admin_team_index') }}">back to list</a>
+
+    {{ include('admin_team/_delete_form.html.twig') }}
+{% endblock %}

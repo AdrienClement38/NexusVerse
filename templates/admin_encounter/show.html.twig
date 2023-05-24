@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Encounter{% endblock %}
+{% block pageTitle %}Encounter{% endblock %}
+
+{% block bodyContent %}
+    <h1>Encounter</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Tournois</th>
+                <td>{{ encounter.tournament.name}}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ encounter.id }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ encounter.date ? encounter.date|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Team 1</th>
+                <td>{{ encounter.teams[0].name }}</td>
+            </tr>
+            <tr>
+                <th>Team 2</th>
+                <td>{{ encounter.teams[1].name }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_encounter_index') }}">back to list</a>
+
+    <a href="{{ path('app_admin_encounter_edit', {'id': encounter.id}) }}">edit</a>
+
+    {{ include('admin_encounter/_delete_form.html.twig') }}
+{% endblock %}

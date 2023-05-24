@@ -5,11 +5,13 @@
 {% block pageTitle %}Ranking{% endblock %}
     
 {% block bodyContent %}
+
     <h1>Classement des équipes</h1>
 
     <table>
         <thead>
             <tr>
+                <th>Position</th>
                 <th>Équipe</th>
                 <th>Points</th>
             </tr>
@@ -17,8 +19,9 @@
         <tbody>
             {% for team in teams %}
             <tr>
-                {# <td>{{ equipe.nom }}</td>
-                <td>{{ equipe.points }}</td> #}
+                <td>{{loop.index}}}</td>
+                <td>{{ team.nom }}</td>
+                <td>{{ team.points }}</td>
             </tr>
             {% endfor %}
         </tbody>

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Encounter index{% endblock %}
+{% block pageTitle %}Encounter index{% endblock %}
+
+{% block bodyContent %}
+    <h1>Encounter index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for encounter in encounters %}
+            <tr>
+                <td>{{ encounter.id }}</td>
+                <td>{{ encounter.date ? encounter.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_admin_encounter_show', {'id': encounter.id}) }}">show</a>
+                    <a href="{{ path('app_admin_encounter_edit', {'id': encounter.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_encounter_new') }}">Create new</a>
+{% endblock %}

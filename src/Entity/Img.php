@@ -24,6 +24,7 @@ class Img
     #[ORM\ManyToMany(targetEntity: Champion::class, mappedBy: 'images')]
     private Collection $champions;
 
+
     #[ORM\ManyToMany(targetEntity: League::class, mappedBy: 'images')]
     private Collection $leagues;
 
@@ -162,4 +163,5 @@ class Img
 
         return $this;
     }
+
 }
