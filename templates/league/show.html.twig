@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-    {% block title %}home{% endblock %}
+    {% block title %}League{% endblock %}
 
     {% block pageTitle %}{% endblock %}
 
     {% block pageImage %}
     
-        <img src="{{ league.images[0].url }}" alt="cover" class="img-fluid">
+        {# <img src="{{ league.images[0].url }}" alt="cover" class="img-fluid"> #}
     
     {% endblock %}
     
@@ -25,8 +25,8 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ encounter.tournament.league.name }} - {{ encounter.tournament.name }}</h5>
                         <p class="card-text">
-                            {{ encounter.team1 }} : {{ encounter.score1 }}<br>
-                            {{ encounter.team2 }} : {{ encounter.score2 }}
+                            {{ encounter.team1.name }} : {{ encounter.score1.value }}<br>
+                            {{ encounter.team2.name }} : {{ encounter.score2.value }}
                         </p>
                     </div>
                 </div>

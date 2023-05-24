@@ -26,8 +26,8 @@ class LeagueController extends AbstractController
     
         // Obtenez les équipes, la ligue, etc. à partir des rencontres
         $encountersArray = $encounters->map(function ($encounter) {
-            $team1 = $encounter->getTeams();
-            $team2 = $encounter->getTeams();
+            $team1 = $encounter->getTeams()->first();
+            $team2 = $encounter->getTeams()->last();
             $league = $encounter->getTournament()->getLeague();
             $score1 = $encounter->getScores()->first();
             $score2 = $encounter->getScores()->last();
@@ -47,9 +47,6 @@ class LeagueController extends AbstractController
         });
     
         return $this->render('league/show.html.twig', [
-
-            dd($encountersArray),
-
             'league' => $league,
             'encountersArray' => $encountersArray,            
         ]);
