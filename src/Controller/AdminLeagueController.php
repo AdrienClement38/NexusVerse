@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('admin/league')]
 class AdminLeagueController extends AbstractController
 {
-    #[Route('/', name: 'app_league_index', methods: ['GET'])]
+    #[Route('/', name: 'app_admin_league_index', methods: ['GET'])]
     public function index(LeagueRepository $leagueRepository): Response
     {
         return $this->render('adminLeague/index.html.twig', [
@@ -21,7 +21,7 @@ class AdminLeagueController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_league_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_admin_league_new', methods: ['GET', 'POST'])]
     public function new(Request $request, LeagueRepository $leagueRepository): Response
     {
         $league = new League();
@@ -31,7 +31,7 @@ class AdminLeagueController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $leagueRepository->save($league, true);
 
-            return $this->redirectToRoute('app_league_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_league_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('adminLeague/new.html.twig', [
@@ -40,7 +40,7 @@ class AdminLeagueController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_league_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_admin_league_show', methods: ['GET'])]
     public function show(League $league): Response
     {
         return $this->render('adminLeague/show.html.twig', [
@@ -48,7 +48,7 @@ class AdminLeagueController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_league_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_admin_league_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, League $league, LeagueRepository $leagueRepository): Response
     {
         $form = $this->createForm(League2Type::class, $league);
@@ -57,7 +57,7 @@ class AdminLeagueController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $leagueRepository->save($league, true);
 
-            return $this->redirectToRoute('app_league_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_league_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('adminLeague/edit.html.twig', [
@@ -66,13 +66,13 @@ class AdminLeagueController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_league_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_admin_league_delete', methods: ['POST'])]
     public function delete(Request $request, League $league, LeagueRepository $leagueRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$league->getId(), $request->request->get('_token'))) {
             $leagueRepository->remove($league, true);
         }
 
-        return $this->redirectToRoute('app_league_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_admin_league_index', [], Response::HTTP_SEE_OTHER);
     }
 }
