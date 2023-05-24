@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Player{% endblock %}
+{% block pageTitle %}New Player{% endblock %}
+
+{% block bodyContent %}
+    <h1>Create new Player</h1>
+
+    {{ include('adminPlayer/_form.html.twig') }}
+
+    <a href="{{ path('app_player_index') }}">back to list</a>
+{% endblock %}
