@@ -16,11 +16,11 @@ class Score
     #[ORM\ManyToOne(inversedBy: 'scores')]
     private ?Encounter $encounter = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Team $team = null;
-
     #[ORM\Column]
     private ?int $value = null;
+
+    #[ORM\ManyToOne(inversedBy: 'scores')]
+    private ?Team $team = null;
 
     public function getId(): ?int
     {
@@ -39,18 +39,6 @@ class Score
         return $this;
     }
 
-    public function getTeam(): ?Team
-    {
-        return $this->team;
-    }
-
-    public function setTeam(?Team $team): self
-    {
-        $this->team = $team;
-
-        return $this;
-    }
-
     public function getValue(): ?int
     {
         return $this->value;
@@ -59,6 +47,18 @@ class Score
     public function setValue(int $value): self
     {
         $this->value = $value;
+
+        return $this;
+    }
+
+    public function getTeam(): ?Team
+    {
+        return $this->team;
+    }
+
+    public function setTeam(?Team $team): self
+    {
+        $this->team = $team;
 
         return $this;
     }

@@ -54,7 +54,6 @@ class AppFixtures extends Fixture
         }
 
         $postsData = [
-
             ['Top Lane'],
             ['Jungle'],
             ['Mid Lane'],
@@ -64,7 +63,7 @@ class AppFixtures extends Fixture
 
         $leagueData = [
             [
-                'name' => 'MASTERCARD NEXUS TOUR    ',
+                'name' => 'MASTERCARD NEXUS TOUR',
                 'img' => 'https://static.riot-esports.fr/uploads/_AUTOxAUTO_crop_center-center_75_none/MNT.png',
             ],
             [
@@ -225,6 +224,8 @@ class AppFixtures extends Fixture
             $posts[] = $post;
         }
 
+        $teamsArray = [];
+
         foreach ($teamsData as $teamData) {
             $team = new Team();
             $imgTeam = new Img();
@@ -262,6 +263,8 @@ class AppFixtures extends Fixture
                     $player->setPost($randomPost);
                 }
             }
+
+            $teamsArray[] = $team;
         }
 
         $user = new User();
@@ -272,18 +275,24 @@ class AppFixtures extends Fixture
             ->setLastName($faker->lastName);
         $manager->persist($user);
 
+        // Création des tournois
+        $tournaments = [];
+
         foreach ($leagueData as $leagueItem) {
             $league = new League();
-            $league->setName($leagueItem['name'])
+            $league->setStartDate($faker->dateTime)
+                ->setEndDate($faker->dateTime)
+                ->setName($leagueItem['name']);
+            $manager->persist($league);
+
+            $tournament = new Tournament();
+            $tournament->setName('Tournoi ' . $league->getName())
                 ->setStartDate($faker->dateTime)
                 ->setEndDate($faker->dateTime);
+            $tournament->setLeague($league);
+            $manager->persist($tournament);
 
-            $imgLeague = new Img();
-            $imgLeague->setUrl($leagueItem['img']);
-            $league->addImage($imgLeague);
-
-            $manager->persist($league);
-            $manager->persist($imgLeague);
+            $tournaments[] = $tournament;
         }
 
         // Création des rencontres
@@ -323,11 +332,6 @@ class AppFixtures extends Fixture
             }
         }
 
-        $score = new Score();
-        $score->setValue($faker->numberBetween(0, 100))
-            ->setEncounter($encounter)
-            ->setTeam($team);
-        $manager->persist($score);
 
         $favorite = new Favorite();
         $favorite->setUser($user);
