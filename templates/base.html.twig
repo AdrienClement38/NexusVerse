@@ -3,86 +3,128 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}NexusVerse{% endblock %}
+			{% block title %}NexusVerse
+			{% endblock %}
 		</title>
 		<link rel="stylesheet" href="{{ asset('assets/css/style.css')}}">
-		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+		<link
+		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 		{# {% block stylesheets %}
-			{{ encore_entry_link_tags('app') }}
-		{% endblock %}
-		{% block javascripts %}
-			{{ encore_entry_script_tags('app') }}
-		{% endblock %} #}
-        <link rel="stylesheet" href="{{ asset('/bootswatch/bootstrap.min.css') }}">
+											{{ encore_entry_link_tags('app') }}
+										{% endblock %}
+										{% block javascripts %}
+											{{ encore_entry_script_tags('app') }}
+										{% endblock %} #}
+		<link rel="stylesheet" href="{{ asset('/bootswatch/bootstrap.min.css') }}">
+		<link rel="stylesheet" href="{{ asset('styles/custom.css') }}">
 
-        <style>
-            .body {
-                background-repeat: no-repeat;
-            }
+		<style>
+			.body {
+				background-repeat: no-repeat;
+			}
 
-            .card {
-                transition: transform 0.3s;
-                border-radius: 5px;
-                border: 1px solid;
-            }
+			.card {
+				transition: transform 0.3s;
+				border-radius: 5px;
+				border: 1px solid;
+			}
 
-            .card:hover {
-                transform: scale(1.05);
-                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-            }
-        </style>
+			.image-container {
+				width: 100%;
+				height: 0;
+				padding-bottom: calc(100% *(2 / 3));
+				overflow: hidden;
+			}
+
+			.image-container img {
+				width: 100%;
+				height: 100%;
+				object-fit: contain; /* Pour ajuster l'image sans déformation */
+			}
+
+			.card:hover {
+				transform: scale(1.05);
+				box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+			}
+
+			.col {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin-bottom: 2rem;
+			}
+		</style>
 	</head>
 
 
 	<body>
-        <header class='mb-4'>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-                <div class="container-fluid">
+		<header class='mb-4'>
+			<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+				<div class="container-fluid">
 
-                    <a class="navbar-brand" href="#">NexusVerse</a>
+					<a class="navbar-brand" href="#">NexusVerse</a>
 
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarColor01">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Leagues</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Classement</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Info tournois</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
-                            </div>
-                        </li>
-                    </ul>
-                    <form class="d-flex">
-                        <input class="form-control me-sm-2" type="search" placeholder="Search">
-                        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                    </form>
-                    </div>
-                </div>
-            </nav>
-        </header>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarColor01">
+						<ul class="navbar-nav me-auto">
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path('app_home')}}">Leagues</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path('app_teams')}}">Teams</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path('app_champions')}}">Champions</a>
+							</li>
+							{# <li class="nav-item">
+																												                            <a class="nav-link" href="app_ranking">Ranking</a>
+																												                        </li> #}
+							<li class="nav-item">
+								<a class="nav-link" href="#">Info tournois</a>
+							</li>
+							{# <li class="nav-item dropdown">
+																												                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+																												                            <div class="dropdown-menu">
+																												                                <a class="dropdown-item" href="#">Action</a>
+																												                                <a class="dropdown-item" href="#">Another action</a>
+																												                                <a class="dropdown-item" href="#">Something else here</a>
+																												                                <div class="dropdown-divider"></div>
+																												                                <a class="dropdown-item" href="#">Separated link</a>
+																												                            </div>
+																												                        </li> #}
+						</ul>
+						{% if app.user %}
 
-        <div  class='d-flex align-items-center justify-content-center mb-4' style="height: 20rem;">
-    
-        <h1 class="text-center display-1">{% block pageTitle %}Leagues{% endblock %}</h1>
-    
-    </div>
-                
-            
-        {% block bodyContent %}{% endblock %}
+							<a class="btn btn-secondary my-2 my-sm-0 me-2" href="{{ path('app_logout')}}">Logout</a>
+
+						{% else %}
+
+							<a class="btn btn-secondary my-2 my-sm-0 me-1" href="{{ path('app_login') }}">Login</a>
+							<a class="btn btn-secondary my-2 my-sm-0 me-3" href="{{ path('app_register') }}">Register</a>
+
+						{% endif %}
+						<form class="d-flex" action="{{ path('search_results') }}" method="GET">
+							<input class="form-control me-sm-2" type="search" placeholder="Search" name="query">
+							<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+						</form>
+					</div>
+				</div>
+			</nav>
+		</header>
+
+		<div class='d-flex align-items-center justify-content-center mb-4' style="height: 20rem;">
+
+			<h1 class="text-center display-1">
+				{% block pageTitle %}Leagues
+				{% endblock %}
+			</h1>
+
+		</div>
+
+
+		{% block bodyContent %}{% endblock %}
 
 	</body>
 
