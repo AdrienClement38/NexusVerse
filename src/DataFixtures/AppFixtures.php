@@ -326,6 +326,7 @@ class AppFixtures extends Fixture
                 $manager->persist($scoreTeam2);
 
                 $encounter->addScore($scoreTeam1);
+                $encounter->addScore($scoreTeam2);
 
                 $manager->persist($encounter);
             }
