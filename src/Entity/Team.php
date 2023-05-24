@@ -33,12 +33,16 @@ class Team
     #[ORM\ManyToMany(targetEntity: Img::class, inversedBy: 'teams')]
     private Collection $images;
 
+    #[ORM\OneToMany(mappedBy: 'team', targetEntity: Score::class)]
+    private Collection $scores;
+
     public function __construct()
     {
         $this->encounters = new ArrayCollection();
         $this->players = new ArrayCollection();
         $this->userFavorites = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->scores = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -174,6 +178,36 @@ class Team
     public function removeImage(Img $image): self
     {
         $this->images->removeElement($image);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Score>
+     */
+    public function getScores(): Collection
+    {
+        return $this->scores;
+    }
+
+    public function addScore(Score $score): self
+    {
+        if (!$this->scores->contains($score)) {
+            $this->scores->add($score);
+            $score->setTeam($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScore(Score $score): self
+    {
+        if ($this->scores->removeElement($score)) {
+            // set the owning side to null (unless already changed)
+            if ($score->getTeam() === $this) {
+                $score->setTeam(null);
+            }
+        }
 
         return $this;
     }
