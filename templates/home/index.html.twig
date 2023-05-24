@@ -9,35 +9,7 @@
     <container class="d-flex justify-content-around px-5 mb-3">
     
         <div class="row">
-        
-            {% for league in leagues %}
-
-                <div class="col">
-                
-                    <a class="text-decoration-none" href="{{ path('app_league', {'leagueId': league.id}) }}">
-                        
-                        <div class="card" style="width: 18rem; height:25rem;">
-
-                            <div class="image-container" style="height: 18rem; padding:1rem;">
-                                <img src="{{league.images[0].url}}" alt="league">
-                            </div>
-
-                            <div class="card-body">
-
-                                <div style="height: ">
-                                    <h5 class="card-title">{{ league.name }}</h5>
-                                </div>
-                                <button class="btn btn-primary">See League</button>
-
-                            </div>
-
-                        </div>
-
-                    </a>
-
-                </div>
-
-            {% endfor %}
+    
         
         </div>
     
