@@ -97,7 +97,7 @@
 						</ul>
 						{% if app.user %}
 
-							<a class="btn btn-secondary my-2 my-sm-0" href="{{ path('app_logout')}}">Logout</a>
+							<a class="btn btn-secondary my-2 my-sm-0 me-2" href="{{ path('app_logout')}}">Logout</a>
 
 						{% else %}
 
@@ -105,8 +105,8 @@
 							<a class="btn btn-secondary my-2 my-sm-0 me-3" href="{{ path('app_register') }}">Register</a>
 
 						{% endif %}
-						<form class="d-flex">
-							<input class="form-control me-sm-2" type="search" placeholder="Search">
+						<form class="d-flex" action="{{ path('search_results') }}" method="GET">
+							<input class="form-control me-sm-2" type="search" placeholder="Search" name="query">
 							<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
 						</form>
 					</div>

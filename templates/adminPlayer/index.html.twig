@@ -24,8 +24,8 @@
                 <td>{{ player.lastName }}</td>
                 <td>{{ player.pseudo }}</td>
                 <td>
-                    <a href="{{ path('app_player_show', {'id': player.id}) }}">show</a>
-                    <a href="{{ path('app_player_edit', {'id': player.id}) }}">edit</a>
+                    <a href="{{ path('app_admin_player_show', {'id': player.id}) }}">show</a>
+                    <a href="{{ path('app_admin_player_edit', {'id': player.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -36,5 +36,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_player_new') }}">Create new</a>
+    <a href="{{ path('app_admin_player_new') }}">Create new</a>
 {% endblock %}
