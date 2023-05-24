@@ -282,6 +282,9 @@ class AppFixtures extends Fixture
             $league = new League();
             $leagueImg = new Img();
             $leagueImg->setUrl($leagueItem['img']);
+
+            $manager->persist($leagueImg);
+
             $league->setStartDate($faker->dateTime)
                 ->setEndDate($faker->dateTime)
                 ->setName($leagueItem['name'])
