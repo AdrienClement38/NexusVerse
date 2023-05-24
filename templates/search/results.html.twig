@@ -29,8 +29,8 @@
                     <a href={{ path('app_tournament_show', {'id': result.id})}}>
                     <div>
                             <h3>{{ result.name }}</h3>
-                            <p>{{ result.dateStart }}</p>
-                            <p>{{ result.dateStop }}</p>
+                            <p>Début: {{ result.startDate|date("d/m/Y H:i") }}</p>
+                            <p>Fin: {{ result.endDate|date("d/m/Y H:i") }}</p>
                         </div>
                     </a>
                 {% endfor %}
