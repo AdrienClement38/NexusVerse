@@ -54,7 +54,6 @@ class AppFixtures extends Fixture
         }
 
         $postsData = [
-
             ['Top Lane'],
             ['Jungle'],
             ['Mid Lane'],
@@ -64,7 +63,7 @@ class AppFixtures extends Fixture
 
         $leagueData = [
             [
-                'name' => 'MASTERCARD NEXUS TOUR    ',
+                'name' => 'MASTERCARD NEXUS TOUR',
                 'img' => 'https://static.riot-esports.fr/uploads/_AUTOxAUTO_crop_center-center_75_none/MNT.png',
             ],
             [
@@ -225,6 +224,8 @@ class AppFixtures extends Fixture
             $posts[] = $post;
         }
 
+        $teamsArray = [];
+
         foreach ($teamsData as $teamData) {
             $team = new Team();
             $imgTeam = new Img();
@@ -262,6 +263,8 @@ class AppFixtures extends Fixture
                     $player->setPost($randomPost);
                 }
             }
+
+            $teamsArray[] = $team;
         }
 
         $user = new User();
@@ -272,54 +275,62 @@ class AppFixtures extends Fixture
             ->setLastName($faker->lastName);
         $manager->persist($user);
 
+        // Création des tournois
+        $tournaments = [];
+
         foreach ($leagueData as $leagueItem) {
             $league = new League();
-            $league->setName($leagueItem['name'])
+            $league->setStartDate($faker->dateTime)
+                ->setEndDate($faker->dateTime)
+                ->setName($leagueItem['name']);
+            $manager->persist($league);
+
+            $tournament = new Tournament();
+            $tournament->setName('Tournoi ' . $league->getName())
                 ->setStartDate($faker->dateTime)
                 ->setEndDate($faker->dateTime);
+            $tournament->setLeague($league);
+            $manager->persist($tournament);
 
-            $imgLeague = new Img();
-            $imgLeague->setUrl($leagueItem['img']);
-            $league->addImage($imgLeague);
-
-            $manager->persist($league);
-            $manager->persist($imgLeague);
+            $tournaments[] = $tournament;
         }
 
-        $tournament = new Tournament();
-        $tournament->setName($faker->word)
-            ->setStartDate($faker->dateTime)
-            ->setEndDate($faker->dateTime)
-            ->setLeague($league);
-        $manager->persist($tournament);
+        // Création des rencontres
+        foreach ($tournaments as $tournament) {
+            for ($i = 1; $i <= 6; $i++) {
+                // Récupération aléatoire de deux équipes
+                do {
+                    $team1 = $teamsArray[array_rand($teamsArray)];
+                    $team2 = $teamsArray[array_rand($teamsArray)];
+                } while ($team1 === $team2);
 
-        $team = new Team();
-        $team->setName($faker->company)
-            ->setCountry($faker->country);
-        $manager->persist($team);
 
-        $player = new Player();
-        $player->setFirstName($faker->firstName)
-            ->setLastName($faker->lastName)
-            ->setPseudo($faker->userName)
-            ->setTeam($team);
-        $manager->persist($player);
+                $encounter = new Encounter();
+                $encounter->setTournament($tournament);
+                $encounter->addTeam($team1);
+                $encounter->addTeam($team2);
+                $encounter->setDate($faker->dateTimeThisMonth());
 
-        $imgPlayer = new Img();
-        $imgPlayer->setUrl($faker->imageUrl());
-        $player->addImage($imgPlayer);
-        $manager->persist($imgPlayer);
+                // Attribution d'un score aléatoire
+                $score1 = $faker->numberBetween(0, 100);
+                $score2 = $faker->numberBetween(0, 100);
 
-        $encounter = new Encounter();
-        $encounter->setDate($faker->dateTime)
-            ->setTournament($tournament);
-        $manager->persist($encounter);
+                $scoreTeam1 = new Score();
+                $scoreTeam1->setTeam($team1);
+                $scoreTeam1->setValue($score1);
+                $manager->persist($scoreTeam1);
 
-        $score = new Score();
-        $score->setValue($faker->numberBetween(0, 100))
-            ->setEncounter($encounter)
-            ->setTeam($team);
-        $manager->persist($score);
+                $scoreTeam2 = new Score();
+                $scoreTeam2->setTeam($team2);
+                $scoreTeam2->setValue($score2);
+                $manager->persist($scoreTeam2);
+
+                $encounter->addScore($scoreTeam1);
+
+                $manager->persist($encounter);
+            }
+        }
+
 
         $favorite = new Favorite();
         $favorite->setUser($user);
