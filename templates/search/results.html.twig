@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Résultats{% endblock %}
+
+{% block pageTitle %}Résultats{% endblock %}
+
+{% block bodyContent %}
+    {% if typedResults is empty %}
+        <p>No results found.</p>
+    {% else %}
+        {% for type, results in typedResults %}
+
+            {% if type == 'App\\Entity\\Player' %}
+                <h2> Player(s) :</h2>
+                {% for result in results %}
+                    <a href={{ path('app_player_show', {'id': result.id})}}>
+                        <div>
+                            <h3>{{ result.pseudo }}</h3>
+                            <p>{{ result.firstName }}</p>
+                            <p>{{ result.lastName }}</p>
+                        </div>
+                    </a>
+                {% endfor %}
+
+
+            {% elseif type == 'App\\Entity\\Tournament' %}
+                <h2> Tournament(s) :</h2>
+                {% for result in results %}
+                    <a href={{ path('app_tournament_show', {'id': result.id})}}>
+                    <div>
+                            <h3>{{ result.name }}</h3>
+                            <p>{{ result.dateStart }}</p>
+                            <p>{{ result.dateStop }}</p>
+                        </div>
+                    </a>
+                {% endfor %}
+
+            {% elseif type == 'App\\Entity\\League' %}
+                <h2> League(s) :</h2>
+                {% for result in results %}
+                    <a href={{ path('app_league_show', {'id': result.id})}}>
+                    <div>
+                            <h3>{{ result.name }}</h3>
+                        </div>
+                    </a>
+                {% endfor %}
+
+            {% elseif type == 'App\\Entity\\Team' %}
+                <h2> Team(s) :</h2>
+                {% for result in results %}
+                    <a href={{ path('app_team_show', {'id': result.id})}}>
+                    <div>
+                            <h3>{{ result.name }}</h3>
+                            <p>{{ result.country }}</p>
+                        </div>
+                    </a>
+                {% endfor %}
+
+            {% elseif type == 'App\\Entity\\Champion' %}
+                <h2> Champion(s) :</h2>
+                {% for result in results %}
+                    <a href={{ path('app_champion_show', {'id': result.id})}}>
+                    <div>
+                            <h3>{{ result.name }}</h3>
+                            <p>{{ result.description }}</p>
+                        </div>
+                    </a>
+                {% endfor %}
+
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}
