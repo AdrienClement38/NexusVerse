@@ -1,17 +1,33 @@
 {% for incomingElement in incomingElements %}
+
     <div class="col">
+
         <a class="text-decoration-none" href="{{ path(hrefPath, {'id': incomingElement.id}) }}">
+
             <div class="card" style="width: 18rem; height: 25rem;">
+
                 <div class="image-container" style="height: 18rem; padding: 1rem;">
-                    {# <img src="{{ incomingElement.images[0].url }}" alt="{{ altImage }}"> #}
+
+                    <img src="{{ incomingElement.images[0].url }}" alt="{{ altImage }}">
+                    
                 </div>
+
                 <div class="card-body">
-                    <div style="height: ">
+
+                    <div>
+
                         <h5 class="card-title">{{ incomingElement.name }}</h5>
+
                     </div>
+
                     <button class="btn btn-primary">More informations</button>
+
                 </div>
+
             </div>
+
         </a>
+
     </div>
+    
 {% endfor %}

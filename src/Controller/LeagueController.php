@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\League;
+use App\Entity\Team;
 use App\Repository\LeagueRepository;
+use App\Repository\TeamRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,35 +22,38 @@ class LeagueController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_league_show', methods: ['GET'])]
-    public function show(League $league): Response
+    public function show(League $league, LeagueRepository $leagueRepository, TeamRepository $teamRepository): Response
     {
+        //obtenir les equipes de la ligue
         $encounters = $league->getTournament()->getEncounters();
     
         // Obtenez les équipes, la ligue, etc. à partir des rencontres
         $encountersArray = $encounters->map(function ($encounter) {
             $team1 = $encounter->getTeams()->first();
             $team2 = $encounter->getTeams()->last();
-            $league = $encounter->getTournament()->getLeague();
             $score1 = $encounter->getScores()->first();
             $score2 = $encounter->getScores()->last();
             $date = $encounter->getDate();
             $tournament = $encounter->getTournament();
-
+            
     
             return [
                 'team1' => $team1,
                 'team2' => $team2,
                 'score1' => $score1,
                 'score2' => $score2,
-                'league' => $league,
                 'date' => $date,
                 'tournament' => $tournament,
             ];
         });
+        
+        
     
         return $this->render('league/show.html.twig', [
+
             'league' => $league,
-            'encountersArray' => $encountersArray,            
+            'encountersArray' => $encountersArray,   
+            'encounters' => $encounters,         
         ]);
     }
 }
