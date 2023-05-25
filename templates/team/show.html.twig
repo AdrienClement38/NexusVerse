@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+    {% block title %}Team{% endblock %}
+
+    {% block pageTitle %}{% endblock %}
+
+    {% block pageImage %}
+    
+        <img src="{{ team.images[0].url }}" style="height: 100%;" alt="cover">
+    
+    {% endblock %}
+    
+    {% block bodyContent %}
+
+    <container class="d-flex flex-column justify-content-around px-5 mb-3">
+
+        <div class="row">
+        
+            <h1 class="mb-4 text-center">Players:</h1>
+            
+            {% for player in team.players %}
+                <div class="col">
+                    <div class="card text-center d-inline" style="width: 18rem;">
+                        <div class="card-body">
+                            <h4 class="card-title mb-3">{{ player.pseudo }}</h4>
+                            <div class="card-text">
+                                <div class="mb-4">
+                                    <h5>Post :</h5>
+                                    <p class="card-text">{{ player.post.value }}</p>
+                                </div>
+                                <div>
+                                    <h5>Champion :</h5>
+                                    <div class="text-center">
+                                        {% for champion in player.champions %}
+                                            <div>
+                                                <img src="{{ champion.images[1].url }}" alt="champion" class="img-fluid mb-2">
+                                                <p class="mb-0">{{ champion.name }}</p>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+
+        <div class="card mb-3" with="90%">
+            <div class="card-body">
+                <h1 class="card-title">Incomming team's encounters :</h1>
+                <div class="row">
+                    {% for encounter in encounters %}
+                    <div class="col-md-6">
+                        <p>{{ encounter.date|date('Y-m-d H:i:s') }}</p>
+                        <ul>
+                            {% for team in encounter.teams %}
+                            <li>{{ team.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        
+    </container>
+
+{% endblock %}

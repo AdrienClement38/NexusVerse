@@ -1,0 +1,27 @@
+{% for incommingElement in incommingElements %}
+
+	<div class='col'>
+
+		<div class="card mb-3" style="width:25rem">
+
+			<div class="card-header">
+				{{ incommingElement.date|date('d-m-Y H:i') }}
+			</div>
+
+			<div class="card-body">
+
+				<h5 class="card-title">{{ incommingElement.tournament.league.name }}<br>
+					{{ incommingElement.tournament.name }}</h5>
+				<p class="card-text">
+					{{ incommingElement.team1.name }} : {{ incommingElement.score1.value }}<br>
+					vs<br>
+					{{ incommingElement.team2.name }} : {{ incommingElement.score2.value }}
+				</p>
+
+			</div>
+
+		</div>
+
+	</div>
+
+{% endfor %}

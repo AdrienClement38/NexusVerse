@@ -1,39 +1,49 @@
 {% extends 'base.html.twig' %}
 
-    {% block title %}home{% endblock %}
+    {% block title %}League{% endblock %}
 
     {% block pageTitle %}{% endblock %}
 
     {% block pageImage %}
     
-        <img src="{{ league.images[0].url }}" alt="cover" class="img-fluid">
+        <img src="{{ league.images[0].url }}" style="height: 100%;" alt="cover">
     
     {% endblock %}
     
     {% block bodyContent %}
 
-    <container class="d-flex justify-content-around px-5 mb-3">
-    
-        <div class="row">
+    <container class="d-flex flex-column justify-content-around px-5 mb-3">
         
-            <h1 class="text-center">Matchs</h1>
-            {% for encounter in encountersArray %}
-                <div class="card mb-3">
-                    <div class="card-header">
-                        {{ encounter.date|date('d-m-Y H:i') }}
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ encounter.tournament.league.name }} - {{ encounter.tournament.name }}</h5>
-                        <p class="card-text">
-                            {{ encounter.team1 }} : {{ encounter.score1 }}<br>
-                            {{ encounter.team2 }} : {{ encounter.score2 }}
-                        </p>
-                    </div>
-                </div>
-            {% endfor %}
-        
+        <div class="row text-center mb-5">
+
+            <h1 class="text-center mb-5">Matchs</h1>
+
+            {% include 'frontCommon/__multipleEncounterDisplay.html.twig' with {
+                            'incommingElements': encountersArray
+                            } 
+                        %}
+
         </div>
-    
+
+
+        <div class="row text-center">
+
+            <h1 class="text-center mb-5">Teams</h1>
+
+            {% for encounter in league.tournament.encounters %}
+
+                {% include 'frontCommon/__multipleCardDisplay.html.twig' with {
+                                    'incomingElements': encounter.teams,
+                                    'hrefPath': 'app_team_show',
+                                    'altImage': 'team',
+                                } 
+                            %}
+
+            {% endfor %}
+
+        </div>
+
+        
     </container>
 
 {% endblock %}
