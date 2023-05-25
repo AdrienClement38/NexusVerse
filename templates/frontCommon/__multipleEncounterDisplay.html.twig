@@ -1,0 +1,50 @@
+{% for ranking in rankings %}
+
+	<div class='col'>
+
+		<div class="card mb-3" style="width:25rem">
+
+			<div
+				class="card-header">
+				{# {{ ranking.date|date('d-m-Y H:i') }} #}
+				<p>date à venir</p>
+			</div>
+
+			<div class="card-body" style="display: flex; justify-content: space-between; align-items: center">
+
+				{% if ranking.draw is defined %}
+					<p class="card-text">Le match est un match nul entre :</p>
+					<p class="card-text">Équipe :
+						{{ ranking.draw.team1.team.name }}, Score :
+						{{ ranking.draw.team1.score }}</p>
+					<p class="card-text">Équipe :
+						{{ ranking.draw.team2.team.name }}, Score :
+						{{ ranking.draw.team2.score }}</p>
+				{% else %}
+					<div style="display: flex; flex-direction: column; justify-content: space-between">
+						<div style="min-height: 4.5rem;">
+							<img src="{{ ranking.winner.team.images[0].url }}" style="height: 2.5rem;" alt="cover">
+							<p class="card-text">{{ ranking.winner.team.name }}</p>
+						</div>
+						<p class="card-text" style="color: green; font-size: 2.2rem;">{{ ranking.winner.score }}</p>
+					</div>
+					<div>
+						<img style="height: 7.5rem;" src="{{ asset('images/Versus.png') }}" alt="">
+					</div>
+					<div>
+						<div style="min-height: 4.5rem;">
+							<img src="{{ ranking.loser.team.images[0].url }}" style="height: 2.5rem;" alt="cover">
+							<p class="card-text">{{ ranking.loser.team.name }}</p>
+						</div>
+						<p class="card-text" style="color: red; font-size: 2.2rem;">{{ ranking.loser.score }}</p>
+					</div>
+				{% endif %}
+
+
+			</div>
+
+		</div>
+
+	</div>
+
+{% endfor %}

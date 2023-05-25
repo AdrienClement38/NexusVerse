@@ -9,18 +9,13 @@
 		<link rel="stylesheet" href="{{ asset('assets/css/style.css')}}">
 		<link
 		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-		{# {% block stylesheets %}
-											{{ encore_entry_link_tags('app') }}
-										{% endblock %}
-										{% block javascripts %}
-											{{ encore_entry_script_tags('app') }}
-										{% endblock %} #}
 		<link rel="stylesheet" href="{{ asset('/bootswatch/bootstrap.min.css') }}">
 		<link rel="stylesheet" href="{{ asset('styles/custom.css') }}">
+		{# <link rel="stylesheet" href="https://www.fontspace.com/valorax-font-f89146"> #}
 
 		<style>
-			.body {
-				background-repeat: no-repeat;
+			body {
+				min-height: 100vh;
 			}
 
 			.card {
@@ -53,16 +48,32 @@
 				justify-content: center;
 				margin-bottom: 2rem;
 			}
+
+			.backgrounds{
+				background-image: url(https://www.connectesport.com/wp-content/uploads/2017/09/worlds-2014-2.jpg); 
+				background-repeat: no-repeat; 
+				background-position: center;
+				background-size: cover;
+				}
+
+			 @font-face {
+			font-family: 'Valorax';
+			src: url("../assets/font/Valorax-lg25V.eot");
+			} 	
+
+			.logoLol:hover{
+				transform: scale(1.05);
+			}
 		</style>
 	</head>
 
 
 	<body>
-		<header class='mb-4'>
+		<header>
 			<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 				<div class="container-fluid">
 
-					<a class="navbar-brand" href="app_home">NexusVerse</a>
+					<a class="navbar-brand" href="{{ path('app_home')}}">NexusVerse</a>
 
 					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
@@ -81,24 +92,17 @@
 							{# <li class="nav-item">
 								<a class="nav-link" href="app_ranking">Ranking</a>
 							</li> #}
-
 							<li class="nav-item">
 								<a class="nav-link" href="#">Info tournois</a>
 							</li>
-							{# <li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-								<div class="dropdown-menu">
-									<a class="dropdown-item" href="#">Action</a>
-									<a class="dropdown-item" href="#">Another action</a>
-									<a class="dropdown-item" href="#">Something else here</a>
-									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="#">Separated link</a>
-								</div>
-							</li> #}
 
 						</ul>
 
 						{% if app.user %}
+
+							{% if 'ROLE_ADMIN' in app.user.roles %}
+								<a class="btn btn-secondary my-2 my-sm-0 me-2" href="{{ path('app_admin')}}">Page admin</a>
+							{% endif %}
 
 							<a class="btn btn-secondary my-2 my-sm-0 me-2" href="{{ path('app_logout')}}">Logout</a>
 
@@ -120,20 +124,23 @@
 			</nav>
 		</header>
 
-		<div class='d-flex align-items-center justify-content-center mb-4' style="height: 20rem;">
+		<div class='backgrounds d-flex align-items-center justify-content-center mb-4' style="height: 20rem;">
 
-			<h1 class="text-center display-1">
+			<h1 class="text-center display-1" style="text-shadow: 2px 2px 4px #000000;">
 				{% block pageTitle %}{% endblock %}
 			</h1>
 
-		    <div class="text-center">
+		    <div class="text-center" style="height:15rem">
 				{% block pageImage %}{% endblock %}
 			</div>
 
 		</div>
 
+		<div>
 
-		{% block bodyContent %}{% endblock %}
+			{% block bodyContent %}{% endblock %}
+			
+		</div>
 
 	</body>
 

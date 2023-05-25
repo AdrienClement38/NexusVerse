@@ -26,9 +26,9 @@ class TeamController extends AbstractController
         $encounters = $team->getEncounters();
     
         return $this->render('team/show.html.twig', [
+
             'team' => $team,
             'encounters' => $encounters
         ]);
     }
-
 }

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin page{% endblock %}
+{% block pageTitle %}Admin page{% endblock %}
+
+{% block bodyContent %}
+
+<div>
+    <div>
+        <a href="{{ path('app_admin_league_index')}}">Manage leagues</a>
+    </div>
+    <div>
+        <a href="{{ path('app_admin_tournament_index')}}">Manage tournaments</a>
+    </div>
+    <div>
+        <a href="{{ path('app_admin_encounter_index')}}">Manage encounters</a>
+    </div>
+    <div>
+        <a href="{{ path('app_admin_team_index')}}">Manage teams</a>
+    </div>
+    <div>
+        <a href="{{ path('app_admin_player_index')}}">Manage players</a>
+    </div>
+    <div>
+        <a href="{{ path('app_admin_champion_index')}}">Manage champions</a>
+    </div>
+</div>
+{% endblock %}
