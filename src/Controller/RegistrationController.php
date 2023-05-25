@@ -39,7 +39,7 @@ class RegistrationController extends AbstractController
             return $userAuthenticator->authenticateUser($user, $appCustomAuthenticator, $request);
 
 
-            return $this->redirectToRoute('app_dashboard');
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('registration/register.html.twig', [
