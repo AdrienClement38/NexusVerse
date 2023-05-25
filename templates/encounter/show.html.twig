@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block pageTitle %}{% endblock %}
+
+{% block pageImage %}{% endblock %}
+
+{% block bodyContent %}
+
+	<container class="d-flex justify-content-around px-5 mb-3">
+
+		<div class="row">
+
+			<h1 class="text-center">Matchs</h1>
+			<div class="card mb-3">
+				<div class="card-body">
+					<h5 class="card-title">Scores:</h5>
+					{% if ranking.draw is defined %}
+						<p class="card-text">Le match est un match nul entre :</p>
+						<p class="card-text">Équipe :
+							{{ ranking.draw.team1.team.name }}, Score :
+							{{ ranking.draw.team1.score }}</p>
+						<p class="card-text">Équipe :
+							{{ ranking.draw.team2.team.name }}, Score :
+							{{ ranking.draw.team2.score }}</p>
+					{% else %}
+						<p class="card-text">L'équipe gagnante est :
+							{{ ranking.winner.team.name }}, avec un score de :
+							{{ ranking.winner.score }}</p>
+						<p class="card-text">L'équipe perdante est :
+							{{ ranking.loser.team.name }}, avec un score de :
+							{{ ranking.loser.score }}</p>
+					{% endif %}
+
+				</div>
+			</div>
+
+		</div>
+
+	</container>
+
+{% endblock %}
