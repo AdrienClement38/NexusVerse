@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Résultats{% endblock %}
+{% block title %}Results{% endblock %}
 
-{% block pageTitle %}Résultats{% endblock %}
+{% block pageTitle %}Results{% endblock %}
 
 {% block bodyContent %}
     {% if typedResults is empty %}
@@ -13,13 +13,11 @@
             {% if type == 'App\\Entity\\Player' %}
                 <h2> Player(s) :</h2>
                 {% for result in results %}
-                    <a href={{ path('app_player_show', {'id': result.id})}}>
-                        <div>
-                            <h3>{{ result.pseudo }}</h3>
-                            <p>{{ result.firstName }}</p>
-                            <p>{{ result.lastName }}</p>
-                        </div>
-                    </a>
+                    <div>
+                        <h3>{{ result.pseudo }}</h3>
+                        <p>FirstName: {{ result.firstName }}</p>
+                        <p>LastName: {{ result.lastName }}</p>
+                    </div>
                 {% endfor %}
 
 
@@ -27,10 +25,10 @@
                 <h2> Tournament(s) :</h2>
                 {% for result in results %}
                     <a href={{ path('app_tournament_show', {'id': result.id})}}>
-                    <div>
+                        <div>
                             <h3>{{ result.name }}</h3>
-                            <p>Début: {{ result.startDate|date("d/m/Y H:i") }}</p>
-                            <p>Fin: {{ result.endDate|date("d/m/Y H:i") }}</p>
+                            <p>Start: {{ result.startDate|date("d/m/Y H:i") }}</p>
+                            <p>End: {{ result.endDate|date("d/m/Y H:i") }}</p>
                         </div>
                     </a>
                 {% endfor %}
@@ -39,7 +37,7 @@
                 <h2> League(s) :</h2>
                 {% for result in results %}
                     <a href={{ path('app_league_show', {'id': result.id})}}>
-                    <div>
+                        <div>
                             <h3>{{ result.name }}</h3>
                         </div>
                     </a>
@@ -49,9 +47,9 @@
                 <h2> Team(s) :</h2>
                 {% for result in results %}
                     <a href={{ path('app_team_show', {'id': result.id})}}>
-                    <div>
-                            <h3>{{ result.name }}</h3>
-                            <p>{{ result.country }}</p>
+                        <div>
+                            <h3>Name: {{ result.name }}</h3>
+                            <p>Country: {{ result.country }}</p>
                         </div>
                     </a>
                 {% endfor %}
@@ -59,12 +57,10 @@
             {% elseif type == 'App\\Entity\\Champion' %}
                 <h2> Champion(s) :</h2>
                 {% for result in results %}
-                    <a href={{ path('app_champion_show', {'id': result.id})}}>
                     <div>
-                            <h3>{{ result.name }}</h3>
-                            <p>{{ result.description }}</p>
-                        </div>
-                    </a>
+                        <h3>Name: {{ result.name }}</h3>
+                        <p>Description: {{ result.description }}</p>
+                    </div>
                 {% endfor %}
 
             {% endif %}
