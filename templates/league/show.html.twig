@@ -1,49 +1,51 @@
 {% extends 'base.html.twig' %}
 
-    {% block title %}League{% endblock %}
+{% block title %}League
+{% endblock %}
 
-    {% block pageTitle %}{% endblock %}
+{% block pageTitle %}{% endblock %}
 
-    {% block pageImage %}
-    
-        <img src="{{ league.images[0].url }}" style="height: 100%;" alt="cover">
-    
-    {% endblock %}
-    
-    {% block bodyContent %}
+{% block pageImage %}
 
-    <container class="d-flex flex-column justify-content-around px-5 mb-3">
-        
-        <div class="row text-center mb-5">
+	<img src="{{ league.images[0].url }}" style="height: 100%;" alt="cover">
 
-            <h1 class="text-center mb-5">Matchs</h1>
+{% endblock %}
 
-            {% include 'frontCommon/__multipleEncounterDisplay.html.twig' with {
-                'incommingElements': encountersArray
-                } 
-            %}
+{% block bodyContent %}
 
-        </div>
+	<container class="d-flex flex-column justify-content-around px-5 mb-3">
+
+		<div class="row text-center mb-5">
+
+			<h1 class="text-center mb-5">Matchs</h1>
+
+			{% include 'frontCommon/__multipleEncounterDisplay.html.twig' with {
+                            'rankings': rankings
+                            } 
+                        %}
 
 
-        <div class="row text-center">
+		</div>
 
-            <h1 class="text-center mb-5">Teams</h1>
 
-            {% for encounter in league.tournament.encounters %}
+		<div class="row text-center">
 
-                {% include 'frontCommon/__multipleCardDisplay.html.twig' with {
+			<h1 class="text-center mb-5">Teams</h1>
+
+			{% for encounter in league.tournament.encounters %}
+
+				{% include 'frontCommon/__multipleCardDisplay.html.twig' with {
                                     'incomingElements': encounter.teams,
                                     'hrefPath': 'app_team_show',
                                     'altImage': 'team',
                                 } 
                             %}
 
-            {% endfor %}
+			{% endfor %}
 
-        </div>
+		</div>
 
-        
-    </container>
+
+	</container>
 
 {% endblock %}
