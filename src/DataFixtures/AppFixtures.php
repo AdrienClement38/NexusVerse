@@ -187,7 +187,7 @@ class AppFixtures extends Fixture
             [
                 'name' => 'Immortals',
                 'country' => 'États-Unis',
-                'img' => 'https://division2lol.fr/tournois/6362211219340877824/equipes/6362215579435474944',
+                'img' => 'https://images.prismic.io/liguefrlol/434c0d6a-1618-4f1e-a6cf-11cd880f9f9e_BeGeniusBlanc.png?auto=compress,format',
                 'players' => [
                     ['alias' => 'Revenge', 'firstName' => 'Mohamed', 'lastName' => 'Kaddoura'],
                     ['alias' => 'Kenvi', 'firstName' => 'Shane', 'lastName' => 'Espinoza'],
@@ -302,42 +302,56 @@ class AppFixtures extends Fixture
         }
 
         // Création des rencontres
+        // Mélanger le tableau des équipes
+        shuffle($teamsArray);
+
         foreach ($tournaments as $tournament) {
-            for ($i = 1; $i <= 6; $i++) {
-                // Récupération aléatoire de deux équipes
-                do {
-                    $team1 = $teamsArray[array_rand($teamsArray)];
-                    $team2 = $teamsArray[array_rand($teamsArray)];
-                } while ($team1 === $team2);
+            // Liste des équipes qui participent à ce tournoi
+            $participatingTeams = $teamsArray;
 
+            // Pour chaque round du tournoi
+            for ($round = 0; $round < log(count($participatingTeams), 2); $round++) {
+                // Mélanger les équipes pour créer de nouvelles rencontres à chaque round
+                shuffle($participatingTeams);
 
-                $encounter = new Encounter();
-                $encounter->setTournament($tournament);
-                $encounter->addTeam($team1);
-                $encounter->addTeam($team2);
-                $encounter->setDate($faker->dateTimeThisMonth());
+                // Pour chaque rencontre de ce round
+                for ($i = 0; $i < count($participatingTeams) / 2; $i++) {
+                    $team1 = $participatingTeams[$i * 2];
+                    $team2 = $participatingTeams[$i * 2 + 1];
 
-                // Attribution d'un score aléatoire
-                $score1 = $faker->numberBetween(0, 100);
-                $score2 = $faker->numberBetween(0, 100);
+                    $encounter = new Encounter();
+                    $encounter->setTournament($tournament);
+                    $encounter->addTeam($team1);
+                    $encounter->addTeam($team2);
+                    $encounter->setDate($faker->dateTimeThisMonth());
 
-                $scoreTeam1 = new Score();
-                $scoreTeam1->setTeam($team1);
-                $scoreTeam1->setValue($score1);
-                $manager->persist($scoreTeam1);
+                    // Attribution d'un score aléatoire, en faisant en sorte que l'équipe1 gagne toujours
+                    $score1 = $faker->numberBetween(50, 100); // Score élevé pour l'équipe1
+                    $score2 = $faker->numberBetween(0, 49); // Score faible pour l'équipe2
 
-                $scoreTeam2 = new Score();
-                $scoreTeam2->setTeam($team2);
-                $scoreTeam2->setValue($score2);
-                $manager->persist($scoreTeam2);
+                    $scoreTeam1 = new Score();
+                    $scoreTeam1->setTeam($team1);
+                    $scoreTeam1->setValue($score1);
+                    $manager->persist($scoreTeam1);
 
-                $encounter->addScore($scoreTeam1);
-                $encounter->addScore($scoreTeam2);
+                    $scoreTeam2 = new Score();
+                    $scoreTeam2->setTeam($team2);
+                    $scoreTeam2->setValue($score2);
+                    $manager->persist($scoreTeam2);
 
-                $manager->persist($encounter);
+                    $encounter->addScore($scoreTeam1);
+                    $encounter->addScore($scoreTeam2);
+
+                    $manager->persist($encounter);
+
+                    // L'équipe1 passe au prochain round
+                    $participatingTeams[$i] = $team1;
+                }
+
+                // Réduire la taille du tableau des équipes participantes pour le prochain round
+                $participatingTeams = array_slice($participatingTeams, 0, count($participatingTeams) / 2);
             }
         }
-
 
         $favorite = new Favorite();
         $favorite->setUser($user);

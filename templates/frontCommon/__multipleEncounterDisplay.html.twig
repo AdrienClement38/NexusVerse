@@ -1,50 +1,152 @@
-{% for ranking in rankings %}
+{% block style %}
+	<style>
+		.timeline {
+			display: flex;
+			overflow-x: auto;
+			padding-top: 2rem;
+		}
+		.timeline-item {
+			flex: 0 0 auto;
+			margin-right: 1rem;
+			width: 25rem; /* Ajustez la largeur en fonction de vos besoins */
+		}
 
-	<div class='col'>
+		.timeline-item:last-child {
+			margin-right: 0;
+		}
 
-		<div class="card mb-3" style="width:25rem">
+		/* Styles pour la barre de défilement */
 
-			<div
-				class="card-header">
-				{# {{ ranking.date|date('d-m-Y H:i') }} #}
-				<p>date à venir</p>
-			</div>
+		.timeline::-webkit-scrollbar {
+			width: 8px;
+			height: 8px;
+		}
 
-			<div class="card-body" style="display: flex; justify-content: space-between; align-items: center">
+		.timeline::-webkit-scrollbar-track {
+			background-color: #f1f1f1;
+		}
 
-				{% if ranking.draw is defined %}
-					<p class="card-text">Le match est un match nul entre :</p>
-					<p class="card-text">Équipe :
-						{{ ranking.draw.team1.team.name }}, Score :
-						{{ ranking.draw.team1.score }}</p>
-					<p class="card-text">Équipe :
-						{{ ranking.draw.team2.team.name }}, Score :
-						{{ ranking.draw.team2.score }}</p>
-				{% else %}
-					<div style="display: flex; flex-direction: column; justify-content: space-between">
-						<div style="min-height: 4.5rem;">
-							<img src="{{ ranking.winner.team.images[0].url }}" style="height: 2.5rem;" alt="cover">
-							<p class="card-text">{{ ranking.winner.team.name }}</p>
+		.timeline::-webkit-scrollbar-thumb {
+			background-color: #888;
+		}
+
+		.timeline::-webkit-scrollbar-thumb:hover {
+			background-color: #555;
+		}
+
+		.timeline::-moz-scrollbar {
+			width: 8px;
+			height: 8px;
+		}
+
+		.timeline::-moz-scrollbar-track {
+			background-color: #f1f1f1;
+		}
+
+		.timeline::-moz-scrollbar-thumb {
+			background-color: #888;
+		}
+
+		.timeline::-moz-scrollbar-thumb:hover {
+			background-color: #555;
+		}
+
+		.timeline::-ms-scrollbar {
+			width: 8px;
+			height: 8px;
+		}
+
+		.timeline::-ms-scrollbar-track {
+			background-color: #f1f1f1;
+		}
+
+		.timeline::-ms-scrollbar-thumb {
+			background-color: #888;
+		}
+
+		.timeline::-ms-scrollbar-thumb:hover {
+			background-color: #555;
+		}
+	</style>
+{% endblock %}
+
+<div class="timeline">
+	{% for ranking in rankings %}
+		<div class='timeline-item'>
+			<div class="card mb-3" style="width:25rem">
+				<div class="card-header">
+					<p>{{ ranking.date|date('d-m-Y H:i') }}</p>
+				</div>
+				<div class="card-body" style="display: flex; justify-content: space-between; align-items: center">
+					{% if ranking.draw is defined %}
+						<div style="display: flex; flex-direction: column; justify-content: space-between">
+							<div style="min-height: 4.5rem;">
+								<img src="{{ ranking.draw.team1.teamimages[0].url }}" style="height: 2.5rem;" alt="cover">
+								<p class="card-text">{{ ranking.draw.team1.team.name }}</p>
+							</div>
+							<p class="card-text" style="color: orange; font-size: 2.2rem;">{{ ranking.draw.team1.score }}</p>
 						</div>
-						<p class="card-text" style="color: green; font-size: 2.2rem;">{{ ranking.winner.score }}</p>
-					</div>
-					<div>
-						<img style="height: 7.5rem;" src="{{ asset('images/Versus.png') }}" alt="">
-					</div>
-					<div>
-						<div style="min-height: 4.5rem;">
-							<img src="{{ ranking.loser.team.images[0].url }}" style="height: 2.5rem;" alt="cover">
-							<p class="card-text">{{ ranking.loser.team.name }}</p>
+						<div>
+							<img style="height: 7.5rem;" src="{{ asset('images/Versus.png') }}" alt="">
 						</div>
-						<p class="card-text" style="color: red; font-size: 2.2rem;">{{ ranking.loser.score }}</p>
-					</div>
-				{% endif %}
-
-
+						<div>
+							<div style="min-height: 4.5rem;">
+								<img src="{{ ranking.draw.team2.team.images[0].url }}" style="height: 2.5rem;" alt="cover">
+								<p class="card-text">{{ ranking.draw.team2.team.name }}</p>
+							</div>
+							<p class="card-text" style="color: orange; font-size: 2.2rem;">{{ ranking.draw.team2.score }}</p>
+						</div>
+					{% else %}
+						<div style="display: flex; flex-direction: column; justify-content: space-between">
+							<div style="min-height: 4.5rem;">
+								<img src="{{ ranking.winner.team.images[0].url }}" style="height: 2.5rem;" alt="cover">
+								<p class="card-text">{{ ranking.winner.team.name }}</p>
+							</div>
+							<p class="card-text" style="color: green; font-size: 2.2rem;">{{ ranking.winner.score }}</p>
+						</div>
+						<div>
+							<img style="height: 7.5rem;" src="{{ asset('images/Versus.png') }}" alt="">
+						</div>
+						<div>
+							<div style="min-height: 4.5rem;">
+								<img src="{{ ranking.loser.team.images[0].url }}" style="height: 2.5rem;" alt="cover">
+								<p class="card-text">{{ ranking.loser.team.name }}</p>
+							</div>
+							<p class="card-text" style="color: red; font-size: 2.2rem;">{{ ranking.loser.score }}</p>
+						</div>
+					{% endif %}
+				</div>
 			</div>
-
 		</div>
+	{% endfor %}
+</div>
+<script>
+	var timeline = document.querySelector('.timeline');
+var isDown = false;
+var startX;
+var scrollLeft;
 
-	</div>
+timeline.addEventListener('mousedown', function (e) {
+isDown = true;
+startX = e.pageX - timeline.offsetLeft;
+scrollLeft = timeline.scrollLeft;
+});
 
-{% endfor %}
+timeline.addEventListener('mouseleave', function () {
+isDown = false;
+});
+
+timeline.addEventListener('mouseup', function () {
+isDown = false;
+});
+
+timeline.addEventListener('mousemove', function (e) {
+if (! isDown) 
+return;
+
+e.preventDefault();
+var x = e.pageX - timeline.offsetLeft;
+var walk = (x - startX) * 1.5; // Contrôlez la vitesse de défilement en ajustant ce coefficient
+timeline.scrollLeft = scrollLeft - walk;
+});
+</script>
