@@ -47,23 +47,24 @@
 
         </div>
 
-        <div class="card mb-3" with="90%">
-            <div class="card-body">
-                <h1 class="card-title">Incomming team's encounters :</h1>
-                <div class="row">
-                    {% for encounter in encounters %}
-                    <div class="col-md-6">
-                        <p>{{ encounter.date|date('Y-m-d H:i:s') }}</p>
-                        <ul>
-                            {% for team in encounter.teams %}
-                            <li>{{ team.name }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    {% endfor %}
+      <div class="card mb-3" with="90%">
+        <div class="card-body">
+            <h1 class="card-title">Incoming team's encounters :</h1>
+            <div class="row">
+                {% for encounter in encounters|sort((a, b) => a.date <=> b.date) %}
+                <div class="col-md-6">
+                    {% set modifiedDate = encounter.date|date_modify('+3 months') %}
+                    <p>Coming on {{ modifiedDate|date('d-m-Y') ~ ' at ' ~ modifiedDate|date('H:i') }}</p>
+                    <ul>
+                        {% for team in encounter.teams %}
+                        <li>{{ team.name }}</li>
+                        {% endfor %}
+                    </ul>
                 </div>
+                {% endfor %}
             </div>
         </div>
+    </div>
 
         
     </container>
