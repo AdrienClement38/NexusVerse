@@ -156,9 +156,9 @@
 								<a class="nav-link" href="{{ path('app_champions')}}">Champions</a>
 							</li>
 
-							<li class="nav-item">
+							{# <li class="nav-item">
 								<a class="nav-link" href="#">Info tournois</a>
-							</li>
+							</li> #}
 						</ul>
 
 						{% if app.user %}
@@ -241,10 +241,11 @@
 				</div>
 			</div>
 		{% endif %}
+
 		<div class="main-content">
 			<div class='backgrounds d-flex align-items-center justify-content-center mb-4' style="height: 20rem;">
-				<h1>
-					{% block h1 %}{% endblock %}
+				<h1 class="display-1">
+					{% block pageTitle %}{% endblock %}
 				</h1>
 			</div>
 
@@ -280,21 +281,21 @@
 
 			<script>
 				const sidebar = document.querySelector('.sidebar');
-const sidebarToggle = document.getElementById('sidebarToggle');
-const sidebarToggleIcon = sidebarToggle.querySelector('i'); // accès à l'icône à l'intérieur du bouton
+				const sidebarToggle = document.getElementById('sidebarToggle');
+				const sidebarToggleIcon = sidebarToggle.querySelector('i'); // accès à l'icône à l'intérieur du bouton
 
-function toggleSidebar() {
-sidebar.classList.toggle('sidebar-expanded');
-}
+				function toggleSidebar() {
+				sidebar.classList.toggle('sidebar-expanded');
+				}
 
-sidebarToggle.addEventListener('click', toggleSidebar);
-sidebarToggleIcon.addEventListener('click', toggleSidebar);
+				sidebarToggle.addEventListener('click', toggleSidebar);
+				sidebarToggleIcon.addEventListener('click', toggleSidebar);
 
-document.addEventListener('click', function (e) {
-if (e.target !== sidebar && e.target !== sidebarToggle && ! sidebar.contains(e.target)) {
-sidebar.classList.remove('sidebar-expanded');
-}
-});
+				document.addEventListener('click', function (e) {
+				if (e.target !== sidebar && e.target !== sidebarToggle && ! sidebar.contains(e.target)) {
+				sidebar.classList.remove('sidebar-expanded');
+				}
+				});
 			</script>
 
 		</body>
