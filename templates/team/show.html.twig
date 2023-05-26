@@ -57,7 +57,10 @@
                     <p>Coming on {{ modifiedDate|date('d-m-Y') ~ ' at ' ~ modifiedDate|date('H:i') }}</p>
                     <ul>
                         {% for team in encounter.teams %}
-                        <li>{{ team.name }}</li>
+                        <div class="d-flex align-items-center">
+                            <li class="me-1">{{ team.name }}</li>
+                            <img src="{{ team.images[0].url }}" style="height: 2rem;" alt="cover">
+                        </div>
                         {% endfor %}
                     </ul>
                 </div>
