@@ -2,7 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Champion;
 use App\Entity\Player;
+use App\Entity\Post;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,11 +18,14 @@ class PlayerType extends AbstractType
             ->add('firstName')
             ->add('lastName')
             ->add('pseudo')
-            ->add('team')
-            ->add('post')
-            ->add('champions')
-            ->add('userFavorites')
-            ->add('images')
+            ->add('post', EntityType::class, [
+                'class' => Post::class,
+                'choice_label' => 'value',
+            ])
+//            ->add('champions', EntityType::class, [
+//                'class' => Champion::class,
+//                'choice_label' => 'name',
+//            ])
         ;
     }
 
