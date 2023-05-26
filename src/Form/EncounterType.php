@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Count;
 
 class EncounterType extends AbstractType
 {
@@ -21,6 +22,13 @@ class EncounterType extends AbstractType
                 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,
+                'constraints' => [
+                    new Count([
+                        'min' => 2,
+                        'max' => 2,
+                        'exactMessage' => 'You have to select 2 teams !!!',
+                    ]),
+                ],
             ])
             ->add('tournament', EntityType::class, [
                 'class' => Tournament::class,
