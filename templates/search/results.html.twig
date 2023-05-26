@@ -9,101 +9,80 @@
         <p>No results found.</p>
     {% else %}
         {% for type, results in typedResults %}
-
-            <container class="d-flex flex-column justify-content-around px-5 mb-3">
-
-                <div class="row text-center mb-5">
-
+            <h2 class="mb-4 text-center">
+                {% if type == 'App\\Entity\\Player' %}
+                    Player(s) :
+                {% elseif type == 'App\\Entity\\Tournament' %}
+                    Tournament(s) :
+                {% elseif type == 'App\\Entity\\League' %}
+                    League(s) :
+                {% elseif type == 'App\\Entity\\Team' %}
+                    Team(s) :
+                {% elseif type == 'App\\Entity\\Champion' %}
+                    Champion(s) :
+                {% endif %}
+            </h2>
+            <div class="row justify-content-center mb-5 ps-3 pe-3">
+                {% for result in results %}
                     {% if type == 'App\\Entity\\Player' %}
-                        <h2 class="mb-4"> Player(s) :</h2>
-                        {% for result in results %}
-                            <div class='col'>
-                                <div class="card" style="width: 10rem">
+                        <div class="col">
+                            <div class="card" style="width: 10rem">
+                                <div class="card-body">
                                     <h5 class="card-title mt-3 mb-1">{{ result.pseudo }}</h5>
-                                    <div class="card-body">
-                                        <p>Post : {{ result.post.value }}</p>
-                                        {% for champion in result.champions %}
-                                            <div>
-                                                <img src="{{ champion.images[1].url }}" alt="champion" class="img-fluid mb-2">
-                                                <p class="mb-0">{{ champion.name }}</p>
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-
-
-                    {% elseif type == 'App\\Entity\\Tournament' %}
-                        <h2 class="mb-4"> Tournament(s) :</h2>
-                        {% for result in results %}
-                            {# <a href={{ path('app_tournament_show', {'id': result.id})}}> #}
-                                <div class='col'>
-                                    <div class="card" style="width: 20rem">
-                                        <h5 class="card-title mt-3 mb-1">{{ result.name }}</h5>
-                                        <div class="card-body">
-                                            <p>Start: {{ result.startDate|date("d/m/Y H:i") }}</p>
-                                            <p>End: {{ result.endDate|date("d/m/Y H:i") }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            {# </a> #}
-                        {% endfor %}
-
-
-
-                    {% elseif type == 'App\\Entity\\League' %}
-                        <h2 class="mb-4">League(s) :</h2>
-                        {% for result in results %}
-                            <div class="col">
-                                <a href="{{ path('app_league_show', {'id': result.id}) }}" class="card-link text-decoration-none">
-                                    <div class="card" style="width: 20rem; height:5rem">
-                                        <div class="card-body d-flex align-items-center justify-content-center">
-                                            <h5 class="card-title">{{ result.name }}</h5>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        {% endfor %}
-
-
-
-                    {% elseif type == 'App\\Entity\\Team' %}
-                        <h2 class="mb-4"> Team(s) :</h2>
-                        {% for result in results %}
-                            <div class='col'>
-                                <div class="card" style="width: 20rem">
-                                    <a class="text-decoration-none" href={{ path('app_team_show', {'id': result.id})}}>
+                                    <p>Post: {{ result.post.value }}</p>
+                                    {% for champion in result.champions %}
                                         <div>
-                                            <h5 class="card-title mt-3 mb-1">Name: {{ result.name }}</h5>
-                                            <p class="card-body">Country: {{ result.country }}</p>
+                                            <img src="{{ champion.images[1].url }}" alt="champion" class="img-fluid mb-2">
+                                            <p class="mb-0">{{ champion.name }}</p>
                                         </div>
-                                    </a>
+                                    {% endfor %}
                                 </div>
                             </div>
-                        {% endfor %}
-
-                        
-
-                    {% elseif type == 'App\\Entity\\Champion' %}
-                        <h2 class="mb-4">Champion(s) :</h2>
-                        {% for result in results %}
-                            <div class='col'>
-                                <div class="card" style="width: 15rem">
-                                    <h5 class="card-title mt-3 mb-1">Name : {{ result.name }}</h5>
-                                    <div class="card-body">
-                                        <img src="{{result.images[1].url}}" class="card-img-top" alt="champion" style="width:10rem">
-                                        <p >Class : {{ result.description }}</p>
+                        </div>
+                    {% elseif type == 'App\\Entity\\Tournament' %}
+                        <div class="col">
+                            <div class="card" style="width: 20rem; height: 12rem">
+                                <div class="card-body">
+                                    <h5 class="card-title mt-3 mb-1">{{ result.name }}</h5>
+                                    <p>Start: {{ result.startDate|date("d/m/Y H:i") }}</p>
+                                    <p>End: {{ result.endDate|date("d/m/Y H:i") }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% elseif type == 'App\\Entity\\League' %}
+                        <div class="col">
+                            <a href="{{ path('app_league_show', {'id': result.id}) }}" class="card-link text-decoration-none">
+                                <div class="card" style="width: 20rem; height: 5rem">
+                                    <div class="card-body d-flex align-items-center justify-content-center">
+                                        <h5 class="card-title">{{ result.name }}</h5>
                                     </div>
                                 </div>
+                            </a>
+                        </div>
+                    {% elseif type == 'App\\Entity\\Team' %}
+                        <div class="col">
+                            <a href="{{ path('app_team_show', {'id': result.id}) }}" class="card-link text-decoration-none">
+                                <div class="card" style="width: 20rem; height: 8rem">
+                                    <div class="card-body">
+                                        <h5 class="card-title mt-3 mb-1">Name: {{ result.name }}</h5>
+                                        <p class="card-text">Country: {{ result.country }}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    {% elseif type == 'App\\Entity\\Champion' %}
+                        <div class="col">
+                            <div class="card" style="width: 12rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title mt-3 mb-1">Name: {{ result.name }}</h5>
+                                    <img src="{{ result.images[1].url }}" alt="champion" class="card-img-top">
+                                    <p class="card-text">Class: {{ result.description }}</p>
+                                </div>
                             </div>
-                        {% endfor %}
-
+                        </div>
                     {% endif %}
-
-                </div>
-
-            </container>
+                {% endfor %}
+            </div>
         {% endfor %}
     {% endif %}
 {% endblock %}

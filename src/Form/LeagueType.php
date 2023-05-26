@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\League;
+use App\Entity\Tournament;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,8 +17,10 @@ class LeagueType extends AbstractType
             ->add('name')
             ->add('startDate')
             ->add('endDate')
-            ->add('tournament')
-            ->add('userFavorites')
+            ->add('tournament', EntityType::class, [
+                'class' => Tournament::class,
+                'choice_label' => 'name',
+            ])
         ;
     }
 

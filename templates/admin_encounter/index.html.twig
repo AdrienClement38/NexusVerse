@@ -11,6 +11,8 @@
             <tr>
                 <th>Id</th>
                 <th>Date</th>
+                <th>Team 1</th>
+                <th>Team 2</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -19,6 +21,8 @@
             <tr>
                 <td>{{ encounter.id }}</td>
                 <td>{{ encounter.date ? encounter.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ encounter.teams[0].name }}</td>
+                <td>{{ encounter.teams[1].name }}</td>
                 <td>
                     <a href="{{ path('app_admin_encounter_show', {'id': encounter.id}) }}">show</a>
                     <a href="{{ path('app_admin_encounter_edit', {'id': encounter.id}) }}">edit</a>

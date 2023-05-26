@@ -149,6 +149,7 @@
 							<li class="nav-item">
 								<a class="nav-link" href="{{ path('app_champions')}}">Champions</a>
 							</li>
+
 							<li class="nav-item">
 								<a class="nav-link" href="#">Info tournois</a>
 							</li>
@@ -171,9 +172,17 @@
 
 						<form class="d-flex" action="{{ path('search_results') }}" method="GET">
 							<input class="form-control me-sm-2" type="search" placeholder="Search" name="query">
-
+							<select class="form-select" name="category">
+								<option value="all">All</option>
+								<option value="player">Players</option>
+								<option value="tournament">Tournaments</option>
+								<option value="league">Leagues</option>
+								<option value="team">Teams</option>
+								<option value="champion">Champions</option>
+							</select>
 							<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
 						</form>
+
 
 					</div>
 				</div>
