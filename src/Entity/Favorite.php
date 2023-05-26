@@ -123,4 +123,15 @@ class Favorite
 
         return $this;
     }
+
+    // Mes customs méthodes :
+
+    public function hasTeam(Team $team): bool
+    {
+        return $this->Teams->contains($team);
+    }
+    public function hasLeague(League $league): bool
+    {
+        return $this->leagues->contains($league);
+    }
 }

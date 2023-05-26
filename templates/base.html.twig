@@ -6,13 +6,11 @@
 			{% block title %}NexusVerse
 			{% endblock %}
 		</title>
-		<link rel="stylesheet" href="{{ asset('assets/css/style.css')}}">
-		<link
-		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+		<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 		<link rel="stylesheet" href="{{ asset('/bootswatch/bootstrap.min.css') }}">
 		<link rel="stylesheet" href="{{ asset('styles/custom.css') }}">
-		{# <link rel="stylesheet" href="https://www.fontspace.com/valorax-font-f89146"> #}
-
+		<script src="https://kit.fontawesome.com/3a705d7acc.js" crossorigin="anonymous"></script>
 		<style>
 			body {
 				min-height: 100vh;
@@ -49,29 +47,91 @@
 				margin-bottom: 2rem;
 			}
 
-			.backgrounds{
-				background-image: url(https://www.connectesport.com/wp-content/uploads/2017/09/worlds-2014-2.jpg); 
-				background-repeat: no-repeat; 
+			.backgrounds {
+				background-image: url('https://www.connectesport.com/wp-content/uploads/2017/09/worlds-2014-2.jpg');
+				background-repeat: no-repeat;
 				background-position: center;
 				background-size: cover;
-				}
+			}
 
-			 @font-face {
-			font-family: 'Valorax';
-			src: url("../assets/font/Valorax-lg25V.eot");
-			} 	
+			@font-face {
+				font-family: 'Valorax';
+				src: url("../assets/font/Valorax-lg25V.eot");
+			}
 
-			.logoLol:hover{
+			.logoLol:hover {
 				transform: scale(1.05);
+			}
+
+			/* Sidebar Styles */
+			.sidebar {
+				width: 0;
+				height: 100vh;
+				position: fixed;
+				top: 0;
+				left: 0;
+				background-color: #343a40; /* Changez la couleur d'arrière-plan selon votre préférence */
+				z-index: 1000;
+				transition: width 0.5s;
+				overflow-y: auto;
+				padding-top: 20px;
+			}
+
+			.sidebar-expanded {
+				width: 200px;
+			}
+
+			.sidebar-content {
+				opacity: 0;
+				transition: opacity 0.5s;
+			}
+
+			.sidebar-expanded .sidebar-content {
+				opacity: 1;
+				transition-delay: 0.5s; /* Ce délai permet à l'opacité de changer après l'expansion de la barre latérale */
+			}
+
+			.sidebar-content h3 {
+				color: #fff; /* Changez la couleur de texte selon votre préférence */
+				margin-top: 0;
+				margin-bottom: 15px;
+			}
+
+			.sidebar-content ul {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+
+			.sidebar-content ul li {
+				color: #fff; /* Changez la couleur de texte selon votre préférence */
+				margin-bottom: 5px;
+			}
+
+			.sidebar-content img {
+				width: 100px;
+				height: auto;
+				display: block;
+				margin-bottom: 10px;
+			}
+
+			.main-content {
+				transition: margin-left 0.5s;
+			}
+
+			.sidebar-expanded + .main-content {
+				margin-left: 200px;
 			}
 		</style>
 	</head>
-
 
 	<body>
 		<header>
 			<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 				<div class="container-fluid">
+					<button style="margin-right: 1rem;" id="sidebarToggle" class="btn btn-secondary">
+						<i class="fas fa-bars"></i>
+					</button>
 
 					<a class="navbar-brand" href="{{ path('app_home')}}">NexusVerse</a>
 
@@ -89,13 +149,9 @@
 							<li class="nav-item">
 								<a class="nav-link" href="{{ path('app_champions')}}">Champions</a>
 							</li>
-							{# <li class="nav-item">
-								<a class="nav-link" href="app_ranking">Ranking</a>
-							</li> #}
 							<li class="nav-item">
 								<a class="nav-link" href="#">Info tournois</a>
 							</li>
-
 						</ul>
 
 						{% if app.user %}
@@ -124,24 +180,107 @@
 			</nav>
 		</header>
 
-		<div class='backgrounds d-flex align-items-center justify-content-center mb-4' style="height: 20rem;">
+		{% if app.user %}
+			<div class="sidebar">
+				<div class="sidebar-content" style="display: flex; align-items: center; flex-direction: column">
+					<h3>Favoris</h3>
+					<ul>
+						<li>
+							<p style="text-align: center;">Leagues</p>
+							<ul>
+								{% if app.user.favorite.leagues is defined %}
+									{% for league in app.user.favorite.leagues %}
+										<li>
+											<a style="height: 4.5rem;display: block;" href="{{ path('app_league_show', {id: league.id}) }}"><img style="object-fit: contain; height: 100%;" src="{{ league.images[0].url }}" alt="{{ league.name }}"></a>
+										</li>
+									{% endfor %}
+								{% endif %}
+							</ul>
+						</li>
 
-			<h1 class="text-center display-1" style="text-shadow: 2px 2px 4px #000000;">
-				{% block pageTitle %}{% endblock %}
-			</h1>
+						<li>
+							<p style="text-align: center;">Teams</p>
+							<ul>
+								{% if app.user.favorite.teams is defined %}
+									{% for team in app.user.favorite.teams %}
+										<li>
+											<a style="height: 4.5rem;display: block;" href="{{ path('app_team_show', {id: team.id}) }}"><img style="object-fit: contain; height: 100%;" src="{{ team.images[0].url }}" alt="{{ team.name }}"></a>
+										</li>
+									{% endfor %}
+								{% endif %}
+							</ul>
+						</li>
 
-		    <div class="text-center" style="height:15rem">
-				{% block pageImage %}{% endblock %}
+						<li>
+							<ul>
+								{% if app.user.favorite.players is defined %}
+									{% for player in app.user.favorite.players %}
+										<li>
+											<a href="{{ path('app_player_show', {id: player.id}) }}">{{ player.name }}</a>
+										</li>
+									{% endfor %}
+								{% endif %}
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		{% endif %}
+		<div class="main-content">
+			<div class='backgrounds d-flex align-items-center justify-content-center mb-4' style="height: 20rem;">
+				<h1>
+					{% block h1 %}{% endblock %}
+				</h1>
 			</div>
 
-		</div>
+			<div class="container">
+				{% for message in app.flashes('success') %}
+					<div class="alert alert-success">
+						{{ message }}
+					</div>
+				{% endfor %}
 
-		<div>
+				{% for message in app.flashes('error') %}
+					<div class="alert alert-danger">
+						{{ message }}
+					</div>
+				{% endfor %}
 
-			{% block bodyContent %}{% endblock %}
-			
-		</div>
+				<div class="container-fluid p-3 main-content"> {% block  bodyContent %}{% endblock %}
+					</div>
+				</div>
+			</div>
 
-	</body>
+			<footer>
+				<div class="footer bg-primary d-flex justify-content-center align-items-center text-white">
+					<p>NexusVerse - 2023 - All rights reserved.</p>
+				</div>
+			</footer>
 
-</html>
+
+			<script src="{{ asset('assets/js/script.js') }}"></script>
+			<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+			<script src="{{ asset('assets/js/popper.js') }}"></script>
+			<script src="{{ asset('assets/js/jquery.js') }}"></script>
+
+			<script>
+				const sidebar = document.querySelector('.sidebar');
+const sidebarToggle = document.getElementById('sidebarToggle');
+const sidebarToggleIcon = sidebarToggle.querySelector('i'); // accès à l'icône à l'intérieur du bouton
+
+function toggleSidebar() {
+sidebar.classList.toggle('sidebar-expanded');
+}
+
+sidebarToggle.addEventListener('click', toggleSidebar);
+sidebarToggleIcon.addEventListener('click', toggleSidebar);
+
+document.addEventListener('click', function (e) {
+if (e.target !== sidebar && e.target !== sidebarToggle && ! sidebar.contains(e.target)) {
+sidebar.classList.remove('sidebar-expanded');
+}
+});
+			</script>
+
+		</body>
+	</html>

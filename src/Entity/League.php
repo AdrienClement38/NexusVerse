@@ -148,4 +148,9 @@ class League
 
         return $this;
     }
+
+    public function getType(): ?string
+    {
+        return 'league';
+    }
 }

@@ -64,6 +64,7 @@ class RankingService
         }
 
         return [
+            'date' => $encounter->getDate(),
             'winner' => [
                 'team' => $winningTeam,
                 'score' => $winnerScore,
@@ -77,9 +78,15 @@ class RankingService
 
     public function getLeagueResult(League $league): array
     {
+        $result = [];
+
         foreach ($league->getTournament()->getEncounters() as $encounter) {
             $result[] = $this->getWinnerAndLoser($encounter);
         }
+
+        usort($result, function ($a, $b) {
+            return $b['date'] <=> $a['date'];
+        });
 
         return $result;
     }

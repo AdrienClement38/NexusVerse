@@ -211,4 +211,9 @@ class Team
 
         return $this;
     }
+
+    public function getType(): ?string
+    {
+        return 'team';
+    }
 }

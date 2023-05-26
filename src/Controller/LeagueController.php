@@ -58,13 +58,17 @@ class LeagueController extends AbstractController
     //     ]);
     // }
     #[Route('/{id}', name: 'app_league_show', methods: ['GET'])]
-    public function show(League $league, RankingService $rankingService): Response
+    public function show(League $league, RankingService $rankingService, TeamRepository $teamRepository): Response
     {
+
+        $leagueId = $league->getId();
+        $uniqueTeams = $teamRepository->findUniqueTeamsByLeagueId($leagueId);
+        // Obtenez les résultats de classement du tournoi
         $rankings = $rankingService->getLeagueResult($league);
 
         return $this->render('league/show.html.twig', [
-
             'league' => $league,
+            'uniqueTeams' => $uniqueTeams,
             'rankings' => $rankings,
         ]);
     }

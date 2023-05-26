@@ -32,16 +32,13 @@
 
 			<h1 class="text-center mb-5">Teams</h1>
 
-			{% for encounter in league.tournament.encounters %}
 
-				{% include 'frontCommon/__multipleCardDisplay.html.twig' with {
-                                    'incomingElements': encounter.teams,
-                                    'hrefPath': 'app_team_show',
-                                    'altImage': 'team',
-                                } 
-                            %}
+			{% include 'frontCommon/__multipleCardDisplay.html.twig' with {
+                    'incomingElements': uniqueTeams,
+                    'hrefPath': 'app_team_show',
+                    'altImage': 'team',
+                } %}
 
-			{% endfor %}
 
 		</div>
 

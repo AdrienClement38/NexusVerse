@@ -1,33 +1,41 @@
 {% for incomingElement in incomingElements %}
+	<div class="col">
+		<a class="text-decoration-none" href="{{ path(hrefPath, {'id': incomingElement.id}) }}">
+			<div class="card" style="width: 18rem; height: 25rem; position: relative;">
+				<div class="image-container" style="height: 18rem; padding: 1rem;">
+					<img src="{{ incomingElement.images[0].url }}" alt="{{ altImage }}">
+				</div>
+				<div class="card-body">
+					<div>
+						<h5 class="card-title">{{ incomingElement.name }}</h5>
+					</div>
+					<button class="btn btn-primary">More informations</button>
+				</div>
+				{% if app.user %}
 
-    <div class="col">
-
-        <a class="text-decoration-none" href="{{ path(hrefPath, {'id': incomingElement.id}) }}">
-
-            <div class="card" style="width: 18rem; height: 25rem;">
-
-                <div class="image-container" style="height: 18rem; padding: 1rem;">
-
-                    <img src="{{ incomingElement.images[0].url }}" alt="{{ altImage }}">
-                    
-                </div>
-
-                <div class="card-body">
-
-                    <div>
-
-                        <h5 class="card-title">{{ incomingElement.name }}</h5>
-
-                    </div>
-
-                    <button class="btn btn-primary">More informations</button>
-
-                </div>
-
-            </div>
-
-        </a>
-
-    </div>
-    
+					{% if incomingElement.getType() == 'team' %}
+						{% if app.user.favorite and app.user.favorite.hasTeam(incomingElement) %}
+							<a href="{{ path('remove_team_favorite', { 'id': incomingElement.id }) }}" style="position: absolute; top: 10px; right: 10px;">
+								<i class="fas fa-star fa-2x" style="color: gold;"></i>
+							</a>
+						{% else %}
+							<a href="{{ path('add_team_favorite', { 'id': incomingElement.id }) }}" style="position: absolute; top: 10px; right: 10px;">
+								<i class="far fa-star fa-2x"></i>
+							</a>
+						{% endif %}
+					{% elseif incomingElement.getType() == 'league' %}
+						{% if app.user.favorite and app.user.favorite.hasLeague(incomingElement) %}
+							<a href="{{ path('remove_league_favorite', { 'id': incomingElement.id }) }}" style="position: absolute; top: 10px; right: 10px;">
+								<i class="fas fa-star fa-2x" style="color: gold;"></i>
+							</a>
+						{% else %}
+							<a href="{{ path('add_league_favorite', { 'id': incomingElement.id }) }}" style="position: absolute; top: 10px; right: 10px;">
+								<i class="far fa-star fa-2x"></i>
+							</a>
+						{% endif %}
+					{% endif %}
+				{% endif %}
+			</div>
+		</a>
+	</div>
 {% endfor %}
