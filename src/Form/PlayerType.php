@@ -22,10 +22,11 @@ class PlayerType extends AbstractType
                 'class' => Post::class,
                 'choice_label' => 'value',
             ])
-//            ->add('champions', EntityType::class, [
-//                'class' => Champion::class,
-//                'choice_label' => 'name',
-//            ])
+            ->add('champions', EntityType::class, [
+                'class' => Champion::class,
+                'choice_label' => 'name',
+                'multiple' => true,
+            ])
         ;
     }
 
