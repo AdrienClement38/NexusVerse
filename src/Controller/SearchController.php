@@ -26,54 +26,63 @@ class SearchController extends AbstractController
     public function search(Request $request)
     {
         $query = $request->query->get('query');
+        $category = $request->query->get('category');
 
-        // Effectuez la logique de recherche en utilisant la valeur de $query
-        // Recherchez dans tous les champs des entités League, Team, Player, Champion et Tournament
         $results = [];
 
-        // On cherche dans l'entité League
-        $leagueResults = $this->entityManager->getRepository(League::class)->createQueryBuilder('l')
-        ->where('l.name LIKE :query')
-        ->setParameter('query', '%' . $query . '%')
-        ->getQuery()
-        ->getResult();
+        if ($category === 'all' || $category === 'player') {
+            $playerResults = $this->entityManager->getRepository(Player::class)->createQueryBuilder('p')
+                ->where('p.firstName LIKE :query')
+                ->orWhere('p.lastName LIKE :query')
+                ->orWhere('p.pseudo LIKE :query')
+                ->setParameter('query', '%' . $query . '%')
+                ->getQuery()
+                ->getResult();
 
-        // On ajoute les résultats de l'entité League aux résultats globaux
-        $results = array_merge($results, $leagueResults);
+            $results = array_merge($results, $playerResults);
+        }
 
-        // On répète pour chaque entité en modifiant les champs qui nous intéresse
-        $teamResults = $this->entityManager->getRepository(Team::class)->createQueryBuilder('t')
-        ->where('t.name LIKE :query')
-        ->orWhere('t.country LIKE :query')
-        ->setParameter('query', '%' . $query . '%')
-        ->getQuery()
-        ->getResult();
-        $results = array_merge($results, $teamResults);
+        if ($category === 'all' || $category === 'tournament') {
+            $tournamentResults = $this->entityManager->getRepository(Tournament::class)->createQueryBuilder('t')
+                ->where('t.name LIKE :query')
+                ->setParameter('query', '%' . $query . '%')
+                ->getQuery()
+                ->getResult();
 
-        $playerResults = $this->entityManager->getRepository(Player::class)->createQueryBuilder('p')
-            ->where('p.firstName LIKE :query')
-            ->orWhere('p.lastName LIKE :query')
-            ->orWhere('p.pseudo LIKE :query')
-            ->setParameter('query', '%' . $query . '%')
-            ->getQuery()
-            ->getResult();
-        $results = array_merge($results, $playerResults);
+            $results = array_merge($results, $tournamentResults);
+        }
 
-        $championResults = $this->entityManager->getRepository(Champion::class)->createQueryBuilder('c')
-            ->where('c.name LIKE :query')
-            ->setParameter('query', '%' . $query . '%')
-            ->getQuery()
-            ->getResult();
-        $results = array_merge($results, $championResults);
+        if ($category === 'all' || $category === 'league') {
+            $leagueResults = $this->entityManager->getRepository(League::class)->createQueryBuilder('l')
+                ->where('l.name LIKE :query')
+                ->setParameter('query', '%' . $query . '%')
+                ->getQuery()
+                ->getResult();
 
-        $tournamentResults = $this->entityManager->getRepository(Tournament::class)->createQueryBuilder('t')
-            ->where('t.name LIKE :query')
-            ->setParameter('query', '%' . $query . '%')
-            ->getQuery()
-            ->getResult();
-        $results = array_merge($results, $tournamentResults);
+            $results = array_merge($results, $leagueResults);
+        }
 
-        // On récupère le type d'entité de chaque résultat
+        if ($category === 'all' || $category === 'team') {
+            $teamResults = $this->entityManager->getRepository(Team::class)->createQueryBuilder('t')
+                ->where('t.name LIKE :query')
+                ->orWhere('t.country LIKE :query')
+                ->setParameter('query', '%' . $query . '%')
+                ->getQuery()
+                ->getResult();
+
+            $results = array_merge($results, $teamResults);
+        }
+
+        if ($category === 'all' || $category === 'champion') {
+            $championResults = $this->entityManager->getRepository(Champion::class)->createQueryBuilder('c')
+                ->where('c.name LIKE :query')
+                ->setParameter('query', '%' . $query . '%')
+                ->getQuery()
+                ->getResult();
+
+            $results = array_merge($results, $championResults);
+        }
+
         $typedResults = [];
         foreach ($results as $result) {
             $class = ClassUtils::getClass($result);
@@ -86,4 +95,3 @@ class SearchController extends AbstractController
         ]);
     }
 }
-
